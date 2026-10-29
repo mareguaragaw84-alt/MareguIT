@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maregu IT & Web Development | Modern Digital Solutions</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0066ff',
+                            600: '#0052cc',
+                            700: '#003d99',
+                            dark: '#0a0f1d',
+                            card: '#12192c',
+                            accent: '#00f2fe'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #080c16;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .glass-panel {
+            background: rgba(18, 25, 44, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-nav {
+            background: rgba(8, 12, 22, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #a5f3fc 50%, #0066ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-cyan {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(0, 102, 255, 0.3);
+        }
+
+        .glow-effect-hover:hover {
+            box-shadow: 0 0 30px 0px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080c16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0066ff;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden antialiased">
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-105 transition-transform">
+                        M
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold tracking-tight text-white block leading-none">Maregu IT</span>
+                        <span class="text-xs text-cyan-400 font-medium tracking-wider uppercase">Web & Software Solutions</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <a href="#home" class="text-gray-300 hover:text-cyan-400 transition-colors">Home</a>
+                    <a href="#services" class="text-gray-300 hover:text-cyan-400 transition-colors">Services</a>
+                    <a href="#projects" class="text-gray-300 hover:text-cyan-400 transition-colors">Projects</a>
+                    <a href="#about" class="text-gray-300 hover:text-cyan-400 transition-colors">About Us</a>
+                    <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition-colors">Contact</a>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#contact" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-semibold text-sm transition-all shadow-md glow-effect hover:scale-105">
+                        Get a Quote
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2 rounded-lg bg-slate-800/50">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-slate-800 px-4 pt-4 pb-6 space-y-3">
+            <a href="#home" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:bg-blue-600/20 hover:text-cyan-400">Home</a>
+            <a href="#services" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:bg-blue-600/20 hover:text-cyan-400">Services</a>
+            <a href="#projects" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:bg-blue-600/20 hover:text-cyan-400">Projects</a>
+            <a href="#about" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:bg-blue-600/20 hover:text-cyan-400">About Us</a>
+            <a href="#contact" class="mobile-link block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:bg-blue-600/20 hover:text-cyan-400">Contact</a>
+            <a href="#contact" class="mobile-link block w-full text-center mt-4 px-5 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold">Get a Quote</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden">
+        <!-- Background Glow Elements -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/3 right-10 w-[300px] h-[300px] bg-cyan-500/15 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                        Next-Gen Software & IT Solutions
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                        Transforming Ideas Into <span class="text-gradient">Powerful Digital Solutions</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Maregu IT & Web Development empowers businesses, institutions, and healthcare providers with custom web applications, robust database design, IT infrastructure, and tailored DHIS2 consultation.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#services" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold shadow-lg glow-effect transition-all transform hover:-translate-y-0.5 text-center">
+                            Explore Services <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                        <a href="#projects" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-panel hover:bg-slate-800/80 text-white font-semibold transition-all text-center border border-slate-700">
+                            View Work
+                        </a>
+                    </div>
+
+                    <!-- Tech Stack Badges -->
+                    <div class="pt-8 border-t border-slate-800/80 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-gray-400 text-sm">
+                        <span class="font-medium text-slate-500 uppercase tracking-wider text-xs">Core Tech:</span>
+                        <div class="flex items-center gap-4 text-xl">
+                            <i class="fa-brands fa-react hover:text-cyan-400 transition-colors" title="React"></i>
+                            <i class="fa-brands fa-php hover:text-indigo-400 transition-colors" title="PHP"></i>
+                            <i class="fa-solid fa-database hover:text-blue-400 transition-colors" title="MySQL / PostgreSQL"></i>
+                            <i class="fa-brands fa-js hover:text-yellow-400 transition-colors" title="JavaScript"></i>
+                            <i class="fa-brands fa-figma hover:text-pink-400 transition-colors" title="Figma"></i>
+                            <i class="fa-solid fa-network-wired hover:text-emerald-400 transition-colors" title="Cisco Networking"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Right Graphic Display -->
+                <div class="lg:col-span-5 relative flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        
+                        <!-- Main Card -->
+                        <div class="glass-panel p-6 rounded-2xl shadow-2xl relative z-10 space-y-4 border-slate-700/50">
+                            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                                <div class="flex items-center space-x-2">
+                                    <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+                                </div>
+                                <span class="font-mono text-xs text-cyan-400">system_status: ACTIVE</span>
+                            </div>
+
+                            <div class="space-y-3 font-mono text-xs text-slate-300">
+                                <p class="text-blue-400">&gt; Initializing Maregu IT Engine...</p>
+                                <div class="p-3 bg-slate-900/90 rounded-lg space-y-1 border border-slate-800">
+                                    <div class="flex justify-between">
+                                        <span>Web Systems</span>
+                                        <span class="text-emerald-400">100% Ready</span>
+                                    </div>
+                                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-blue-500 to-emerald-400 h-full w-full"></div>
+                                    </div>
+                                </div>
+
+                                <div class="p-3 bg-slate-900/90 rounded-lg space-y-1 border border-slate-800">
+                                    <div class="flex justify-between">
+                                        <span>DHIS2 Consultation</span>
+                                        <span class="text-cyan-400">Configured</span>
+                                    </div>
+                                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-blue-500 to-cyan-400 h-full w-[90%]"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 flex items-center justify-between text-xs text-slate-400">
+                                <span class="flex items-center"><i class="fa-solid fa-shield-halved text-cyan-400 mr-2"></i> High Security & Speed</span>
+                                <span class="text-emerald-400 font-semibold">99.9% Uptime</span>
+                            </div>
+                        </div>
+
+                        <!-- Floating Feature Badges -->
+                        <div class="absolute -top-6 -left-6 glass-panel p-3.5 rounded-xl shadow-lg z-20 flex items-center gap-3 animate-float border border-cyan-500/30">
+                            <div class="p-2 rounded-lg bg-blue-600/30 text-cyan-300">
+                                <i class="fa-solid fa-code text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-white">Full-Stack</p>
+                                <p class="text-[10px] text-slate-400">Custom Web Architecture</p>
+                            </div>
+                        </div>
+
+                        <div class="absolute -bottom-6 -right-6 glass-panel p-3.5 rounded-xl shadow-lg z-20 flex items-center gap-3 animate-float-delayed border border-blue-500/30">
+                            <div class="p-2 rounded-lg bg-emerald-600/30 text-emerald-300">
+                                <i class="fa-solid fa-heart-pulse text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-white">Health Info</p>
+                                <p class="text-[10px] text-slate-400">DHIS2 & Analytics</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Offered Section -->
+    <section id="services" class="py-24 relative bg-slate-950/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <h2 class="text-xs font-bold text-cyan-400 tracking-widest uppercase">Our Core Competencies</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Comprehensive Technology Services</p>
+                <p class="text-slate-400 text-sm sm:text-base">We provide end-to-end digital solutions tailored to elevate your organizational efficiency, brand presence, and technical infrastructure.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Service 1 -->
+                <div class="glass-panel rounded-2xl p-8 hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-2 glow-effect-hover flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-xl bg-blue-600/20 border border-blue-500/30 text-cyan-400 flex items-center justify-center text-2xl mb-6 group-hover:bg-gradient-to-tr group-hover:from-blue-600 group-hover:to-cyan-400 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">Custom Web Development</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            High-performing dynamic websites and scalable web applications engineered using HTML5, CSS3, JavaScript, PHP, and modern frameworks.
+                        </p>
+                    </div>
+                    <ul class="space-y-2 text-xs text-slate-300 font-medium pt-4 border-t border-slate-800">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Responsive & Fast Loading</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Custom CMS & E-Commerce</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Full-Stack Architecture</li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass-panel rounded-2xl p-8 hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-2 glow-effect-hover flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-2xl mb-6 group-hover:bg-gradient-to-tr group-hover:from-indigo-600 group-hover:to-purple-400 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-indigo-300 transition-colors">Software & Database Solutions</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Tailored management systems, custom enterprise software, and optimized relational database design (MySQL, PostgreSQL) for business automation.
+                        </p>
+                    </div>
+                    <ul class="space-y-2 text-xs text-slate-300 font-medium pt-4 border-t border-slate-800">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-indigo-400 mr-2"></i> Custom Business Portals</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-indigo-400 mr-2"></i> Database Optimization & Backup</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-indigo-400 mr-2"></i> Secure API Integrations</li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="glass-panel rounded-2xl p-8 hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-2 glow-effect-hover flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-xl bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-2xl mb-6 group-hover:bg-gradient-to-tr group-hover:from-emerald-600 group-hover:to-teal-400 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-emerald-300 transition-colors">IT Infrastructure & Networking</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Complete network design, LAN/WAN setup, router/switch configuration, server installation, hardware repair, and ongoing IT system administration.
+                        </p>
+                    </div>
+                    <ul class="space-y-2 text-xs text-slate-300 font-medium pt-4 border-t border-slate-800">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Network Security & Monitoring</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Hardware Maintenance</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> On-Site & Remote IT Support</li>
+                    </ul>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="glass-panel rounded-2xl p-8 hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-2 glow-effect-hover flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-xl bg-pink-600/20 border border-pink-500/30 text-pink-400 flex items-center justify-center text-2xl mb-6 group-hover:bg-gradient-to-tr group-hover:from-pink-600 group-hover:to-rose-400 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-palette"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-pink-300 transition-colors">Graphic & UI/UX Design</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            User-centric digital design including modern web/app UI mockups in Figma, brand identities, logos, brochures, and digital promotional assets.
+                        </p>
+                    </div>
+                    <ul class="space-y-2 text-xs text-slate-300 font-medium pt-4 border-t border-slate-800">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-pink-400 mr-2"></i> Figma UI Prototyping</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-pink-400 mr-2"></i> Brand Identity & Vector Logos</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-pink-400 mr-2"></i> User Experience Optimization</li>
+                    </ul>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="glass-panel rounded-2xl p-8 hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-2 glow-effect-hover flex flex-col justify-between lg:col-span-2">
+                    <div>
+                        <div class="w-14 h-14 rounded-xl bg-cyan-600/20 border border-cyan-500/30 text-cyan-400 flex items-center justify-center text-2xl mb-6 group-hover:bg-gradient-to-tr group-hover:from-cyan-600 group-hover:to-blue-500 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-notes-medical"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">Health Information Systems / DHIS2 Consultation</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Specialized health informatics services including DHIS2 customization, health data analysis dashboard development, tracker capture configuration, and institutional health data training.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-800 text-xs text-slate-300">
+                        <div class="flex items-center"><i class="fa-solid fa-check text-cyan-400 mr-2"></i> DHIS2 Setup & Tracker Configuration</div>
+                        <div class="flex items-center"><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Health Data Visualizations</div>
+                        <div class="flex items-center"><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Health Analytics & Reporting</div>
+                        <div class="flex items-center"><i class="fa-solid fa-check text-cyan-400 mr-2"></i> System Integration & Data Quality</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects / Portfolio Section -->
+    <section id="projects" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <h2 class="text-xs font-bold text-cyan-400 tracking-widest uppercase mb-2">Our Portfolio</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">Featured Impact Projects</p>
+                </div>
+                
+                <!-- Filter Buttons -->
+                <div class="flex flex-wrap gap-2 mt-6 md:mt-0" id="project-filters">
+                    <button data-filter="all" class="filter-btn px-4 py-2 rounded-xl text-xs font-medium bg-blue-600 text-white transition-all">All</button>
+                    <button data-filter="web" class="filter-btn px-4 py-2 rounded-xl text-xs font-medium glass-panel text-slate-300 hover:text-white transition-all">Web Apps</button>
+                    <button data-filter="software" class="filter-btn px-4 py-2 rounded-xl text-xs font-medium glass-panel text-slate-300 hover:text-white transition-all">Software</button>
+                    <button data-filter="health" class="filter-btn px-4 py-2 rounded-xl text-xs font-medium glass-panel text-slate-300 hover:text-white transition-all">DHIS2 / Health</button>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project Card 1 -->
+                <div class="project-card glass-panel rounded-2xl overflow-hidden group border-slate-800 hover:border-slate-700 transition-all duration-300" data-category="software">
+                    <div class="h-48 bg-slate-900 relative overflow-hidden flex items-center justify-center p-6 border-b border-slate-800">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent z-10"></div>
+                        <i class="fa-solid fa-graduation-cap text-6xl text-blue-500/30 group-hover:scale-110 transition-transform duration-500"></i>
+                        <span class="absolute top-4 right-4 z-20 px-3 py-1 rounded-full text-[10px] font-semibold bg-blue-500/20 text-cyan-300 border border-blue-500/30">
+                            Management System
+                        </span>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h3 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">School Management System</h3>
+                        <p class="text-xs text-slate-400 line-clamp-2">
+                            Comprehensive multi-role platform for administrators, teachers, students, and parents. Features grade management, attendance tracking, and automated reporting.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 pt-2">
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-300">PHP</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-300">MySQL</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-300">Bootstrap</span>
+                        </div>
+                        <button onclick="openProjectModal('School Management System', 'Full multi-role portal managing student records, grade calculations, staff schedules, and fee management with real-time reporting dashboards.', 'PHP, MySQL, JavaScript, HTML5/CSS3')" class="w-full mt-4 py-2 rounded-xl border border-slate-700 text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+                            View Details <i class="fa-solid fa-chevron-right text-[10px] ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="project-card glass-panel rounded-2xl overflow-hidden group border-slate-800 hover:border-slate-700 transition-all duration-300" data-category="web">
+                    <div class="h-48 bg-slate-900 relative overflow-hidden flex items-center justify-center p-6 border-b border-slate-800">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent z-10"></div>
+                        <i class="fa-solid fa-hotel text-6xl text-cyan-500/30 group-hover:scale-110 transition-transform duration-500"></i>
+                        <span class="absolute top-4 right-4 z-20 px-3 py-1 rounded-full text-[10px] font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                            Tourism & Hospitality
+                        </span>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h3 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">Lalibela Tourism & Hotel Booking</h3>
+                        <p class="text-xs text-slate-400 line-clamp-2">
+                            Modern web portal for tourist site exploration, tour packages, room availability booking, and integrated query systems.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 pt-2">
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-300">JavaScript</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-300">PHP</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-300">Tailwind</span>
+                        </div>
+                        <button onclick="openProjectModal('Lalibela Tourism Portal', 'A rich web portal designed for tourists to explore historic destinations in Lalibela, book hotels online, and contact local guides directly.', 'JavaScript, PHP, MySQL, CSS Grid/Flexbox')" class="w-full mt-4 py-2 rounded-xl border border-slate-700 text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+                            View Details <i class="fa-solid fa-chevron-right text-[10px] ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="project-card glass-panel rounded-2xl overflow-hidden group border-slate-800 hover:border-slate-700 transition-all duration-300" data-category="web">
+                    <div class="h-48 bg-slate-900 relative overflow-hidden flex items-center justify-center p-6 border-b border-slate-800">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent z-10"></div>
+                        <i class="fa-solid fa-cart-shopping text-6xl text-emerald-500/30 group-hover:scale-110 transition-transform duration-500"></i>
+                        <span class="absolute top-4 right-4 z-20 px-3 py-1 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                            E-Commerce
+                        </span>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h3 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">Business Dashboards & E-Commerce</h3>
+                        <p class="text-xs text-slate-400 line-clamp-2">
+                            Interactive product showcase, inventory tracking system, client order management, and operational analytics dashboard.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 pt-2">
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-300">React</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-300">REST API</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-300">Tailwind</span>
+                        </div>
+                        <button onclick="openProjectModal('Custom E-Commerce & Dashboard', 'Dynamic online storefront connected to an administrative control panel for product stock updates, order tracking, and sales revenue insights.', 'React, Node/PHP API, MySQL, Tailwind CSS')" class="w-full mt-4 py-2 rounded-xl border border-slate-700 text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+                            View Details <i class="fa-solid fa-chevron-right text-[10px] ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 -->
+                <div class="project-card glass-panel rounded-2xl overflow-hidden group border-slate-800 hover:border-slate-700 transition-all duration-300" data-category="health">
+                    <div class="h-48 bg-slate-900 relative overflow-hidden flex items-center justify-center p-6 border-b border-slate-800">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent z-10"></div>
+                        <i class="fa-solid fa-chart-line text-6xl text-indigo-500/30 group-hover:scale-110 transition-transform duration-500"></i>
+                        <span class="absolute top-4 right-4 z-20 px-3 py-1 rounded-full text-[10px] font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                            Health Data
+                        </span>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h3 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">DHIS2 Health Analytics Integration</h3>
+                        <p class="text-xs text-slate-400 line-clamp-2">
+                            Custom DHIS2 health system configuration, pivot table setup, indicator creation, and automated health facility report generation.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 pt-2">
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-300">DHIS2</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-300">Data Analytics</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono text-slate-300">Web API</span>
+                        </div>
+                        <button onclick="openProjectModal('DHIS2 Analytics System', 'Designed custom dashboards and configured indicators for regional healthcare tracking, streamlining routine data collection and data quality validation.', 'DHIS2 Framework, Web API, PostgreSQL, Data Visualizer')" class="w-full mt-4 py-2 rounded-xl border border-slate-700 text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-all">
+                            View Details <i class="fa-solid fa-chevron-right text-[10px] ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us & Key Metrics Section -->
+    <section id="about" class="py-24 relative bg-slate-950/60 border-y border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-6 space-y-6">
+                    <h2 class="text-xs font-bold text-cyan-400 tracking-widest uppercase">Why Choose Maregu IT</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">Delivering Excellence & Scalable Tech Solutions</p>
+                    <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+                        At Maregu IT & Web Development (Mareg Web Development and Software Solution), we combine deep technical expertise with practical problem solving. We don't just build code; we engineer reliable digital assets designed to scale.
+                    </p>
+
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 text-cyan-400 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-check-double"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-sm">Tailored Software Engineering</h4>
+                                <p class="text-xs text-slate-400">Customized to match your unique organizational requirements without bloat.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-shield-virus"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-sm">Reliable Infrastructure & Security</h4>
+                                <p class="text-xs text-slate-400">Database security, secure network setup, and dependable routine technical support.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-headset"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-sm">End-to-End Assistance</h4>
+                                <p class="text-xs text-slate-400">From initial UI wireframing and deployment to staff training and system updates.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid Counter -->
+                <div class="lg:col-span-6 grid grid-cols-2 gap-4">
+                    <div class="glass-panel p-6 rounded-2xl text-center space-y-2 border-slate-800">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-gradient-cyan">15+</div>
+                        <p class="text-xs text-slate-400 font-medium">Completed Projects</p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl text-center space-y-2 border-slate-800">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-gradient-cyan">100%</div>
+                        <p class="text-xs text-slate-400 font-medium">Client Satisfaction</p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl text-center space-y-2 border-slate-800">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-gradient-cyan">99.9%</div>
+                        <p class="text-xs text-slate-400 font-medium">System Reliability</p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl text-center space-y-2 border-slate-800">
+                        <div class="text-3xl sm:text-4xl font-extrabold text-gradient-cyan">24/7</div>
+                        <p class="text-xs text-slate-400 font-medium">Technical Availability</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Contact / Project Inquiry Form -->
+    <section id="contact" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto glass-panel p-8 sm:p-12 rounded-3xl relative overflow-hidden border-slate-700/60 shadow-2xl">
+                
+                <div class="text-center space-y-3 mb-10">
+                    <h2 class="text-xs font-bold text-cyan-400 tracking-widest uppercase">Start a Conversation</h2>
+                    <p class="text-3xl font-extrabold text-white">Let's Build Something Great</p>
+                    <p class="text-slate-400 text-sm">Have a project in mind or need expert IT consultation? Send us a message today.</p>
+                </div>
+
+                <form id="contact-form" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-2">Your Name *</label>
+                            <input type="text" required placeholder="maregu" class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-2">Email Address *</label>
+                            <input type="email" required placeholder="mareguaragaw84@gmail.com" class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 transition-colors">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-2">Phone Number</label>
+                            <input type="tel" placeholder="+251 9... / +251..." class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-2">Service Needed *</label>
+                            <select required class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-white text-sm focus:outline-none focus:border-cyan-400 transition-colors">
+                                <option value="" class="bg-slate-900">Select a Service...</option>
+                                <option value="web" class="bg-slate-900">Custom Web Development</option>
+                                <option value="software" class="bg-slate-900">Software & Database Solution</option>
+                                <option value="networking" class="bg-slate-900">IT Infrastructure & Networking</option>
+                                <option value="design" class="bg-slate-900">Graphic & UI/UX Design</option>
+                                <option value="dhis2" class="bg-slate-900">Health Info / DHIS2 Consultation</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-2">Project Details / Message *</label>
+                        <textarea required rows="4" placeholder="Briefly describe your requirements, timeline, or goals..." class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 transition-colors"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-sm shadow-lg glow-effect transition-all flex items-center justify-center space-x-2">
+                        <span>Send Message</span>
+                        <i class="fa-solid fa-paper-plane text-xs"></i>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                
+                <!-- Col 1: Brand Info -->
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white font-bold text-lg">
+                            M
+                        </div>
+                        <span class="text-lg font-bold text-white">Maregu IT</span>
+                    </div>
+                    <p class="text-xs leading-relaxed text-slate-400">
+                        Mareg Web Development and Software Solution. Building tailored web platforms, database applications, and IT network infrastructure.
+                    </p>
+                    <div class="flex space-x-3 pt-2">
+                        <a href="#" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-300 hover:text-cyan-400 hover:border-cyan-400 transition-colors"><i class="fa-brands fa-linkedin-in text-xs"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-300 hover:text-cyan-400 hover:border-cyan-400 transition-colors"><i class="fa-brands fa-github text-xs"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-300 hover:text-cyan-400 hover:border-cyan-400 transition-colors"><i class="fa-brands fa-twitter text-xs"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-300 hover:text-cyan-400 hover:border-cyan-400 transition-colors"><i class="fa-brands fa-telegram text-xs"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-semibold text-sm">Quick Links</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#home" class="hover:text-cyan-400 transition-colors">Home</a></li>
+                        <li><a href="#services" class="hover:text-cyan-400 transition-colors">Services</a></li>
+                        <li><a href="#projects" class="hover:text-cyan-400 transition-colors">Featured Projects</a></li>
+                        <li><a href="#about" class="hover:text-cyan-400 transition-colors">Why Choose Us</a></li>
+                        <li><a href="#contact" class="hover:text-cyan-400 transition-colors">Request Quote</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Services -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-semibold text-sm">Solutions</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#services" class="hover:text-cyan-400 transition-colors">Web Development</a></li>
+                        <li><a href="#services" class="hover:text-cyan-400 transition-colors">Database Engineering</a></li>
+                        <li><a href="#services" class="hover:text-cyan-400 transition-colors">IT Networking & Hardware</a></li>
+                        <li><a href="#services" class="hover:text-cyan-400 transition-colors">UI/UX & Graphics</a></li>
+                        <li><a href="#services" class="hover:text-cyan-400 transition-colors">DHIS2 Health Analytics</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Direct Contact -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-semibold text-sm">Get In Touch</h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li class="flex items-start space-x-2">
+                            <i class="fa-solid fa-location-dot text-cyan-400 mt-0.5"></i>
+                            <span>Ethiopia,st.lalibela</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-envelope text-cyan-400"></i>
+                            <span>mareguaragaw84@gmail.com</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-phone text-cyan-400"></i>
+                            <span>+251 987781317</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="pt-8 border-t border-slate-900 text-center text-xs text-slate-500">
+                <p>&copy; <span id="current-year"></span> Maregu IT & Web Development / Mareg Web Development and Software Solution. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Detail Modal Box -->
+    <div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl max-w-lg w-full border-slate-700 shadow-2xl relative space-y-4">
+            <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 id="modal-title" class="text-xl font-bold text-white"></h3>
+            <p id="modal-desc" class="text-sm text-slate-300 leading-relaxed"></p>
+            <div class="pt-2">
+                <span class="text-xs font-semibold text-cyan-400 block mb-1">Technologies Used:</span>
+                <p id="modal-tech" class="text-xs font-mono text-slate-400"></p>
+            </div>
+            <button onclick="closeProjectModal()" class="w-full mt-4 py-2.5 rounded-xl bg-blue-600 text-white font-semibold text-xs hover:bg-blue-500 transition-colors">
+                Close Preview
+            </button>
+        </div>
+    </div>
+
+    <!-- Feedback Notification Banner -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 hidden glass-panel border border-emerald-500/50 p-4 rounded-xl shadow-2xl flex items-center space-x-3 text-emerald-400 text-sm">
+        <i class="fa-solid fa-circle-check text-lg"></i>
+        <span id="toast-message">Your request has been submitted successfully!</span>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Set dynamic copyright year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Portfolio Filtering logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-blue-600', 'text-white');
+                    b.classList.add('glass-panel', 'text-slate-300');
+                });
+                btn.classList.add('bg-blue-600', 'text-white');
+                btn.classList.remove('glass-panel', 'text-slate-300');
+
+                const filter = btn.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Modal Handler
+        function openProjectModal(title, desc, tech) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-desc').textContent = desc;
+            document.getElementById('modal-tech').textContent = tech;
+            document.getElementById('project-modal').classList.remove('hidden');
+        }
+
+        function closeProjectModal() {
+            document.getElementById('project-modal').classList.add('hidden');
+        }
+
+        // Contact Form Submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const toast = document.getElementById('toast');
+            toast.classList.remove('hidden');
+
+            this.reset();
+
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 4000);
+        });
+    </script>
+</body>
+</html>

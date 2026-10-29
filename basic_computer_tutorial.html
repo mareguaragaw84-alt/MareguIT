@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="pageTitle">Basic Computer Tutorial - EthioCode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS Variables for Light/Dark Mode (Same as index.html) --- */
+        :root {
+            --primary-color: #059669; /* Emerald Green */
+            --secondary-color: #047857;
+            --bg-color: #ffffff;
+            --text-color: #1f2937;
+            --card-bg: #f3f4f6;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --border-color: #d1d5db;
+        }
+
+        .dark-mode {
+            --primary-color: #34d399;
+            --secondary-color: #10b981;
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --card-bg: #1f2937;
+            --nav-bg: rgba(17, 24, 39, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            --border-color: #374151;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Noto Sans Ethiopic', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        /* --- Navigation Bar (Simple Nav) --- */
+        header {
+            position: sticky; top: 0; z-index: 1000;
+            background-color: var(--nav-bg);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            max-width: 1200px; margin: 0 auto; padding: 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none;
+        }
+
+        .controls { display: flex; gap: 15px; align-items: center; }
+        .btn-icon {
+            background: none; border: none; color: var(--text-color); cursor: pointer;
+            font-size: 1.2rem; transition: var(--transition);
+        }
+
+        /* --- Course Hero Section --- */
+        .course-hero {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .course-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .course-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .cta-btn {
+            background-color: white;
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-btn:hover {
+            background-color: var(--card-bg);
+        }
+
+        /* --- Course Content Section --- */
+        .course-content {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        /* Module List (Accordion Style) */
+        .module-list {
+            margin-top: 30px;
+        }
+        
+        .module-title {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            padding: 15px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .module-title:hover {
+            background-color: var(--border-color);
+        }
+        
+        .module-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            background-color: var(--bg-color);
+            border-left: 3px solid var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .module-content.active {
+            max-height: 500px; /* Adjust height based on content */
+            padding: 15px 20px;
+        }
+        
+        .module-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .module-content li {
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        
+        .module-content li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Dark Mode Toggle Button */
+        .theme-toggle {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--primary-color); color: white;
+            width: 50px; height: 50px; border-radius: 50%;
+            border: none; cursor: pointer; font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><i class="fas fa-laptop-code"></i> EthioCode</a>
+            
+            <div class="controls">
+                <a href="index.html" class="back-btn" style="text-decoration: none; color: var(--text-color); font-weight: bold; display: flex; align-items: center; gap: 5px;"><span data-key="home">Home</span></a>
+                <button class="btn-icon" onclick="toggleLanguage()" title="Switch Language">
+                    <i class="fas fa-language"></i> <span id="lang-indicator">EN</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="course-hero">
+        <h1 data-key="courseTitle">Basic Computer & MS-Office Tutorial</h1>
+        <p data-key="courseSubtitle">Master essential digital skills for work and study. Perfect for beginners!</p>
+        <a href="register.html" class="cta-btn" data-key="enrollBtn">Enroll Now</a>
+    </div>
+
+    <div class="course-content">
+        <h2 style="color: var(--primary-color); margin-bottom: 20px;" data-key="whatYouLearn">What You Will Learn:</h2>
+        
+        <div class="module-list">
+            
+            <div class="module-title" onclick="toggleModule('module1')">
+                <span data-key="mod1Title">1. Computer Hardware and Software Fundamentals</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="module-content" id="module1">
+                <ul>
+                    <li data-key="mod1Li1">Operating Systems (Windows Interface)</li>
+                    <li data-key="mod1Li2">File and Folder Management</li>
+                    <li data-key="mod1Li3">Internet Browsing and Email Basics</li>
+                </ul>
+            </div>
+            
+            <div class="module-title" onclick="toggleModule('module2')">
+                <span data-key="mod2Title">2. Microsoft Word (Document Creation)</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="module-content" id="module2">
+                <ul>
+                    <li data-key="mod2Li1">Formatting and Editing Text</li>
+                    <li data-key="mod2Li2">Creating Tables and Inserting Images</li>
+                    <li data-key="mod2Li3">Printing and Document Review</li>
+                </ul>
+            </div>
+            
+            <div class="module-title" onclick="toggleModule('module3')">
+                <span data-key="mod3Title">3. Microsoft Excel (Data Management)</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="module-content" id="module3">
+                <ul>
+                    <li data-key="mod3Li1">Basic Formulas and Functions (SUM, AVG)</li>
+                    <li data-key="mod3Li2">Creating Charts and Graphs</li>
+                    <li data-key="mod3Li3">Data Sorting and Filtering</li>
+                </ul>
+            </div>
+
+             <div class="module-title" onclick="toggleModule('module4')">
+                <span data-key="mod4Title">4. Microsoft PowerPoint (Presentation Skills)</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="module-content" id="module4">
+                <ul>
+                    <li data-key="mod4Li1">Slide Design and Layouts</li>
+                    <li data-key="mod4Li2">Adding Animations and Transitions</li>
+                    <li data-key="mod4Li3">Delivering the Presentation</li>
+                </ul>
+            </div>
+            
+        </div>
+        
+        <div style="margin-top: 50px; text-align: center;">
+             <p data-key="infoMsg">Start your journey to digital literacy today!</p>
+             <a href="register.html" class="cta-btn" style="margin-top: 15px;" data-key="enrollBtn2">Enroll Now</a>
+        </div>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+
+    <script>
+        // --- 1. Language Handling (English / Amharic) ---
+        let currentLang = 'en';
+        
+        const translations = {
+            en: {
+                pageTitle: "Basic Computer Tutorial - EthioCode",
+                home: "Home",
+                courseTitle: "Basic Computer & MS-Office Tutorial",
+                courseSubtitle: "Master essential digital skills for work and study. Perfect for beginners!",
+                enrollBtn: "Enroll Now",
+                enrollBtn2: "Enroll Now",
+                whatYouLearn: "What You Will Learn:",
+                mod1Title: "1. Computer Hardware and Software Fundamentals",
+                mod1Li1: "Operating Systems (Windows Interface)",
+                mod1Li2: "File and Folder Management",
+                mod1Li3: "Internet Browsing and Email Basics",
+                mod2Title: "2. Microsoft Word (Document Creation)",
+                mod2Li1: "Formatting and Editing Text",
+                mod2Li2: "Creating Tables and Inserting Images",
+                mod2Li3: "Printing and Document Review",
+                mod3Title: "3. Microsoft Excel (Data Management)",
+                mod3Li1: "Basic Formulas and Functions (SUM, AVG)",
+                mod3Li2: "Creating Charts and Graphs",
+                mod3Li3: "Data Sorting and Filtering",
+                mod4Title: "4. Microsoft PowerPoint (Presentation Skills)",
+                mod4Li1: "Slide Design and Layouts",
+                mod4Li2: "Adding Animations and Transitions",
+                mod4Li3: "Delivering the Presentation",
+                infoMsg: "Start your journey to digital literacy today!"
+            },
+            am: {
+                pageTitle: "መሰረታዊ ኮምፒውተር ስልጠና - ኢትዮኮድ",
+                home: "መነሻ",
+                courseTitle: "መሰረታዊ ኮምፒውተር እና ኤም.ኤስ. ኦፊስ ስልጠና",
+                courseSubtitle: "ለስራ እና ለትምህርት አስፈላጊ የሆኑ የዲጂታል ክህሎቶችን ይቆጣጠሩ። ለጀማሪዎች ተስማሚ!",
+                enrollBtn: "አሁኑኑ ይመዝገቡ",
+                enrollBtn2: "አሁኑኑ ይመዝገቡ",
+                whatYouLearn: "የሚማሩዋቸው ነገሮች፡",
+                mod1Title: "1. የኮምፒውተር ሃርድዌር እና ሶፍትዌር መሰረቶች",
+                mod1Li1: "ኦፕሬቲንግ ሲስተሞች (Windows Interface)",
+                mod1Li2: "የፋይል እና ፎልደር አስተዳደር",
+                mod1Li3: "ኢንተርኔት መጠቀም እና የኢሜይል መሰረታዊ ነገሮች",
+                mod2Title: "2. ማይክሮሶፍት ወርድ (የሰነድ ፈጠራ)",
+                mod2Li1: "የጽሑፍ አቀማመጥ እና አርትዖት",
+                mod2Li2: "ሠንጠረዦችን መፍጠር እና ምስሎችን ማስገባት",
+                mod2Li3: "ማተም እና ሰነድ መገምገም",
+                mod3Title: "3. ማይክሮሶፍት ኤክሴል (የዳታ አስተዳደር)",
+                mod3Li1: "መሰረታዊ ቀመሮች እና ተግባራት (SUM, AVG)",
+                mod3Li2: "ገበታዎችን እና ግራፎችን መፍጠር",
+                mod3Li3: "ዳታን መደርደር እና ማጣራት",
+                mod4Title: "4. ማይክሮሶፍት ፓወርፖይንት (የዝግጅት አቀራረብ ክህሎቶች)",
+                mod4Li1: "የስላይድ ዲዛይን እና አቀማመጦች",
+                mod4Li2: "አኒሜሽን እና ትራንዚሽን መጨመር",
+                mod4Li3: "የዝግጅት አቀራረብን መስጠት",
+                infoMsg: "ወደ ዲጂታል እውቀት ጉዞዎን ዛሬ ይጀምሩ!"
+            }
+        };
+
+        function updateLanguage(lang) {
+            document.getElementById('lang-indicator').innerText = lang.toUpperCase();
+            
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'am' : 'en';
+            updateLanguage(currentLang);
+        }
+        
+        // --- 2. Dark/Light Mode Toggle ---
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('theme-icon');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+        
+        // --- 3. Module Accordion Toggle ---
+        function toggleModule(id) {
+            const content = document.getElementById(id);
+            const title = content.previousElementSibling;
+            
+            // Check if it's currently open
+            const isOpen = content.classList.contains('active');
+            
+            // Close all modules first (optional, but good for clean UI)
+            document.querySelectorAll('.module-content').forEach(mod => {
+                mod.classList.remove('active');
+                mod.previousElementSibling.querySelector('i').classList.remove('fa-chevron-up');
+                mod.previousElementSibling.querySelector('i').classList.add('fa-chevron-down');
+            });
+
+            if (!isOpen) {
+                // Open the clicked module
+                content.classList.add('active');
+                title.querySelector('i').classList.remove('fa-chevron-down');
+                title.querySelector('i').classList.add('fa-chevron-up');
+            }
+        }
+
+        // Initialize with default Amharic for Ethiopian context
+        window.onload = function() {
+            toggleLanguage();
+        }
+    </script>
+</body>
+</html>

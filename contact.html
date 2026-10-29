@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="pageTitle">Contact Us - EthioCode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS Variables for Light/Dark Mode (Same as Index/About) --- */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --bg-color: #ffffff;
+            --text-color: #1f2937;
+            --card-bg: #f3f4f6;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --border-color: #d1d5db;
+        }
+
+        .dark-mode {
+            --primary-color: #60a5fa;
+            --secondary-color: #3b82f6;
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --card-bg: #1f2937;
+            --nav-bg: rgba(17, 24, 39, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            --border-color: #374151;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Noto Sans Ethiopic', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        /* --- Navigation Bar (Sticky Top) --- */
+        header {
+            position: sticky; top: 0; z-index: 1000;
+            background-color: var(--nav-bg);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            max-width: 1200px; margin: 0 auto; padding: 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none;
+        }
+
+        .controls { display: flex; gap: 15px; align-items: center; }
+        .btn-icon {
+            background: none; border: none; color: var(--text-color); cursor: pointer;
+            font-size: 1.2rem; transition: var(--transition);
+        }
+
+        /* --- Contact Content Styling --- */
+        .contact-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .contact-info, .contact-form-wrapper {
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-info h2, .contact-form-wrapper h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* Info Items */
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .info-item i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        /* Map Embed */
+        .map-embed {
+            margin-top: 30px;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        
+        .map-embed iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Form Styling (Similar to register.html) */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-submit:hover { background-color: var(--secondary-color); }
+        
+        .success-message {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #10b981; /* Green */
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+
+        /* Dark Mode Toggle Button */
+        .theme-toggle {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--primary-color); color: white;
+            width: 50px; height: 50px; border-radius: 50%;
+            border: none; cursor: pointer; font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .contact-container {
+                grid-template-columns: 1fr; /* Stack columns on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><i class="fas fa-laptop-code"></i> EthioCode</a>
+            
+            <div class="controls">
+                <a href="index.html" class="back-btn" style="text-decoration: none; color: var(--text-color); font-weight: bold; display: flex; align-items: center; gap: 5px;"><span data-key="home">Home</span></a>
+                <button class="btn-icon" onclick="toggleLanguage()" title="Switch Language">
+                    <i class="fas fa-language"></i> <span id="lang-indicator">EN</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="contact-container">
+        
+        <div class="contact-form-wrapper">
+            <h2 data-key="formHeader">Send Us a Message</h2>
+            
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="contactName" data-key="fullName">Full Name</label>
+                    <input type="text" id="contactName" name="contactName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactEmail" data-key="email">Email Address</label>
+                    <input type="email" id="contactEmail" name="contactEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactSubject" data-key="subject">Subject</label>
+                    <input type="text" id="contactSubject" name="contactSubject" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactMessage" data-key="message">Your Message</label>
+                    <textarea id="contactMessage" name="contactMessage" rows="5" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit" data-key="sendBtn">Send Message</button>
+            </form>
+            
+            <div class="success-message" id="form-success">
+                <i class="fas fa-check-circle"></i> <span data-key="successMessage">Your message has been sent successfully!</span>
+            </div>
+        </div>
+        
+        <div class="contact-info">
+            <h2 data-key="infoHeader">Contact Information</h2>
+            
+            <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span data-key="address">St.Lalibela, Century Meskel Kibra,  Lalibela, Ethiopia</span>
+            </div>
+            
+            <div class="info-item">
+                <i class="fas fa-phone"></i>
+                <span>+251987412889</span>
+            </div>
+            
+            <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <span>mareguaragaw84@gmail.com</span>
+            </div>
+            
+            <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span data-key="hours">Mon - Fri: 8:30 AM - 5:30 PM</span>
+            </div>
+            
+            <div class="map-embed">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15608.669474104636!2d39.03641933237937!3d12.031996097705209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x16413eee814f2d03%3A0xf27414e782ae4b62!2sLalibela!5e0!3m2!1sen!2set!4v1765354424735!5m2!1sen!2set" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+        
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+
+    <script>
+        // --- 1. Language Handling (English / Amharic) ---
+        let currentLang = 'en';
+        
+        const translations = {
+            en: {
+                pageTitle: "Contact Us - EthioCode",
+                home: "Home",
+                formHeader: "Send Us a Message",
+                fullName: "Full Name",
+                email: "Email Address",
+                subject: "Subject",
+                message: "Your Message",
+                sendBtn: "Send Message",
+                successMessage: "Your message has been sent successfully!",
+                infoHeader: "Contact Information",
+                address: "Bole Medhanialem, Century Mall, 3rd Floor, Addis Ababa, Ethiopia",
+                hours: "Mon - Fri: 8:30 AM - 5:30 PM"
+            },
+            am: {
+                pageTitle: "አግኙን - ኢትዮኮድ",
+                home: "መነሻ",
+                formHeader: "መልዕክት ይላኩልን",
+                fullName: "ሙሉ ስም",
+                email: "ኢሜይል አድራሻ",
+                subject: "ርዕስ",
+                message: "መልዕክትዎ",
+                sendBtn: "መልዕክት ይላኩ",
+                successMessage: "መልዕክትዎ በተሳካ ሁኔታ ተልኳል!",
+                infoHeader: "የመገኛ አድራሻ",
+                address: "ቅ/ላሊብላ፣ መስቀል ክብራ ቀበሌ፣ ላሊብላ፣ ኢትዮጵያ",
+                hours: "ከሰኞ - አርብ: ከጠዋቱ 2:30 እስከ ምሽቱ 11:30"
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'am' : 'en';
+            document.getElementById('lang-indicator').innerText = currentLang.toUpperCase();
+            
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
+            });
+        }
+        
+        // --- 2. Dark/Light Mode Toggle ---
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('theme-icon');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+        
+        // --- 3. Form Submission Handling (JS) ---
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent actual form submission
+            
+            // Check if all fields are filled (basic validation)
+            const name = document.getElementById('contactName').value.trim();
+            const email = document.getElementById('contactEmail').value.trim();
+            const subject = document.getElementById('contactSubject').value.trim();
+            const message = document.getElementById('contactMessage').value.trim();
+            
+            if (name && email && subject && message) {
+                // Simulate successful submission
+                this.reset(); // Clear the form
+                document.getElementById('form-success').style.display = 'block'; // Show success message
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('form-success').style.display = 'none';
+                }, 5000);
+            } else {
+                alert("Please fill out all required fields.");
+            }
+        });
+
+
+        // Initialize with default Amharic for Ethiopian context
+        window.onload = function() {
+            toggleLanguage();
+        }
+    </script>
+</body>
+</html>

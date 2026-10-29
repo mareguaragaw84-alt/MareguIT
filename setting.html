@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="pageTitle">Settings - Student Dashboard | EthioCode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS Variables (Shared for consistent design) --- */
+        :root {
+            --primary-color: #059669; /* Emerald Green */
+            --secondary-color: #047857;
+            --bg-color: #ffffff;
+            --text-color: #1f2937;
+            --card-bg: #f3f4f6;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --border-color: #d1d5db;
+            --sidebar-width: 250px;
+        }
+
+        .dark-mode {
+            --primary-color: #34d399;
+            --secondary-color: #10b981;
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --card-bg: #1f2937;
+            --nav-bg: rgba(17, 24, 39, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            --border-color: #374151;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Noto Sans Ethiopic', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        /* --- Navigation & Sidebar Styles (Consistent) --- */
+        header { position: sticky; top: 0; z-index: 1000; background-color: var(--nav-bg); box-shadow: var(--shadow); backdrop-filter: blur(10px); }
+        nav { max-width: 1200px; margin: 0 auto; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none; }
+        .menu-toggle { display: none; }
+        .nav-links { list-style: none; display: flex; gap: 20px; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 500; padding: 5px 0; transition: all 0.3s ease; }
+        .nav-links a:hover { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); }
+        .dropdown { position: relative; }
+        .dropdown-content { display: none; position: absolute; background-color: var(--card-bg); min-width: 250px; box-shadow: var(--shadow); z-index: 1; border-radius: 8px; overflow: hidden; top: 100%; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .controls { display: flex; gap: 15px; align-items: center; }
+        .search-bar { position: relative; }
+        .search-bar i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-color); opacity: 0.6; pointer-events: none; }
+        .search-input { padding: 8px 12px 8px 35px; border: 1px solid var(--border-color); border-radius: 20px; background: var(--bg-color); color: var(--text-color); width: 150px; transition: width 0.3s; }
+        .btn-icon { background: none; border: none; color: var(--text-color); cursor: pointer; font-size: 1.2rem; transition: var(--transition); }
+        .btn-primary { background-color: var(--primary-color); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: 600; transition: background-color 0.3s; }
+        .logout { background-color: #ef4444; }
+
+        .main-content-area { display: flex; max-width: 1200px; margin: 0 auto; padding: 20px 0; min-height: 80vh; }
+        .sidebar { width: var(--sidebar-width); flex-shrink: 0; padding: 20px; background-color: var(--card-bg); border-right: 1px solid var(--border-color); }
+        .sidebar h3 { color: var(--primary-color); margin-bottom: 20px; border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; }
+        .sidebar ul { list-style: none; }
+        .sidebar li a { display: block; padding: 12px 10px; margin-bottom: 5px; color: var(--text-color); text-decoration: none; border-radius: 8px; transition: var(--transition); display: flex; align-items: center; gap: 10px; }
+        .sidebar li a:hover, .sidebar li a.active { background-color: var(--primary-color); color: white; transform: translateX(5px); }
+
+        /* --- Settings Specific Styles --- */
+        .dashboard-area {
+            flex-grow: 1;
+            padding: 20px 30px;
+        }
+        
+        .dashboard-title { 
+            font-size: 2.2rem; 
+            margin-bottom: 30px; 
+            color: var(--secondary-color); 
+        }
+
+        .settings-section {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .settings-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .btn-update {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+        
+        .btn-update:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* Language/Theme Toggle Styling in Settings */
+        .toggle-options {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .toggle-options button {
+             padding: 8px 15px;
+             border-radius: 5px;
+             border: 1px solid var(--border-color);
+             background-color: var(--bg-color);
+             color: var(--text-color);
+             cursor: pointer;
+             transition: var(--transition);
+        }
+        .toggle-options button.active, .toggle-options button:hover {
+             background-color: var(--primary-color);
+             color: white;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 950px) {
+            .menu-toggle { display: block; }
+            .sidebar.open { left: 0; }
+            .main-content-area { flex-direction: column; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div style="display: flex; align-items: center;">
+                 <div class="menu-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <a href="index.html" class="logo"><i class="fas fa-laptop-code"></i> EthioCode</a>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="index.html" data-key="home">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" data-key="courses">Courses <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="basic_computer_tutorial.html" data-key="basicComp">Basic Computer (MS-Office)</a>
+                        <a href="#">Web Development</a>
+                        <a href="#">Graphic Design</a>
+                        <a href="#">App Development</a>
+                    </div>
+                </li>
+                <li><a href="service.html" data-key="service">Services</a></li>
+                <li><a href="about.html" data-key="about">About</a></li>
+                <li><a href="contact.html" data-key="contact">Contact</a></li>
+            </ul>
+
+            <div class="controls">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search..." data-key="searchPlaceholder">
+                </div>
+                <button class="btn-icon" onclick="toggleLanguage()" title="Switch Language">
+                    <i class="fas fa-language"></i> <span id="lang-indicator">EN</span>
+                </button>
+                <button class="btn-icon" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <a href="register.html" id="auth-button" class="btn-primary" onclick="toggleLogin(event)">
+                    <span data-key="login">Login</span> <i class="fas fa-sign-in-alt"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content-area">
+        
+        <aside class="sidebar" id="sidebar">
+            <h3 data-key="dashboardTitle">Student Dashboard</h3>
+            <ul>
+                <li><a href="overview.html" data-key="overview"><i class="fas fa-tachometer-alt"></i> Overview</a></li>
+                <li><a href="mycourse.html" data-key="myCourses"><i class="fas fa-book-open"></i> My Courses</a></li>
+                <li><a href="schedule.html" data-key="schedule"><i class="fas fa-calendar-alt"></i> Schedule</a></li>
+                <li><a href="billing.html" data-key="billing"><i class="fas fa-file-invoice"></i> Billing</a></li>
+                <li><a href="setting.html" class="active" data-key="settings"><i class="fas fa-cogs"></i> Settings</a></li>
+            </ul>
+        </aside>
+
+        <div class="dashboard-area">
+            
+            <h2 class="dashboard-title" data-key="settingsTitle">Account Settings</h2>
+            
+            <div class="settings-section">
+                <h3 data-key="profileInfo">Personal Information</h3>
+                <form onsubmit="event.preventDefault(); alert('Profile updated!');">
+                    <div class="form-group">
+                        <label for="fullName" data-key="labelName">Full Name</label>
+                        <input type="text" id="fullName" value="Abebe Kebede" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-key="labelEmail">Email Address</label>
+                        <input type="email" id="email" value="abebe.kebede@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" data-key="labelPhone">Phone Number</label>
+                        <input type="text" id="phone" value="+251 911 234567">
+                    </div>
+                    <button type="submit" class="btn-update" data-key="updateProfile">Update Profile</button>
+                </form>
+            </div>
+
+            <div class="settings-section">
+                <h3 data-key="securityTitle">Security Settings</h3>
+                 <form onsubmit="event.preventDefault(); alert('Password changed!');">
+                    <div class="form-group">
+                        <label for="currentPass" data-key="labelCurrentPass">Current Password</label>
+                        <input type="password" id="currentPass" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPass" data-key="labelNewPass">New Password</label>
+                        <input type="password" id="newPass" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="confirmPass" data-key="labelConfirmPass">Confirm New Password</label>
+                        <input type="password" id="confirmPass" required>
+                    </div>
+                    <button type="submit" class="btn-update" style="background-color: #f97316;" data-key="changePass">Change Password</button>
+                </form>
+            </div>
+
+            <div class="settings-section">
+                 <h3 data-key="preferenceTitle">App Preferences</h3>
+                 
+                 <div class="form-group">
+                    <label data-key="labelLanguage">Default Language</label>
+                    <div class="toggle-options">
+                        <button id="lang-en" class="active" onclick="setLanguageSetting('en')">English</button>
+                        <button id="lang-am" onclick="setLanguageSetting('am')">አማርኛ</button>
+                    </div>
+                 </div>
+                 
+                 <div class="form-group">
+                    <label data-key="labelTheme">Color Theme</label>
+                    <div class="toggle-options">
+                        <button id="theme-light" class="active" onclick="setThemeSetting('light')"><i class="fas fa-sun"></i> <span data-key="lightMode">Light Mode</span></button>
+                        <button id="theme-dark" onclick="setThemeSetting('dark')"><i class="fas fa-moon"></i> <span data-key="darkMode">Dark Mode</span></button>
+                    </div>
+                 </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <script>
+        // Set initial language to English as requested
+        let currentLang = 'en'; 
+        let currentTheme = 'light';
+        let isLoggedIn = true; // Assume logged in for dashboard pages
+        
+        const translations = {
+            en: {
+                pageTitle: "Settings - Student Dashboard | EthioCode",
+                home: "Home", courses: "Courses", service: "Services", about: "About", contact: "Contact",
+                searchPlaceholder: "Search...", login: "Login", logout: "Logout",
+                basicComp: "Basic Computer (MS-Office)",
+                dashboardTitle: "Student Dashboard",
+                overview: "Overview", myCourses: "My Courses", schedule: "Schedule", billing: "Billing", settings: "Settings",
+                settingsTitle: "Account Settings",
+                profileInfo: "Personal Information", securityTitle: "Security Settings", preferenceTitle: "App Preferences",
+                labelName: "Full Name", labelEmail: "Email Address", labelPhone: "Phone Number",
+                labelCurrentPass: "Current Password", labelNewPass: "New Password", labelConfirmPass: "Confirm New Password",
+                updateProfile: "Update Profile", changePass: "Change Password",
+                labelLanguage: "Default Language", labelTheme: "Color Theme", lightMode: "Light Mode", darkMode: "Dark Mode"
+            },
+            am: {
+                pageTitle: "ቅንብሮች - የተማሪ ዳሽቦርድ | ኢትዮኮድ",
+                home: "መነሻ", courses: "ኮርሶች", service: "አገልግሎቶች", about: "ስለ እኛ", contact: "አግኙን",
+                searchPlaceholder: "ይፈልጉ...", login: "ግባ", logout: "ውጣ",
+                basicComp: "መሰረታዊ ኮምፒውተር (MS-Office)",
+                dashboardTitle: "የተማሪ ዳሽቦርድ",
+                overview: "አጠቃላይ እይታ", myCourses: "ኮርሶቼ", schedule: "የጊዜ ሰሌዳ", billing: "ክፍያ", settings: "ቅንብሮች",
+                settingsTitle: "የመለያ ቅንብሮች",
+                profileInfo: "የግል መረጃ", securityTitle: "የደህንነት ቅንብሮች", preferenceTitle: "የመተግበሪያ ምርጫዎች",
+                labelName: "ሙሉ ስም", labelEmail: "ኢሜይል አድራሻ", labelPhone: "ስልክ ቁጥር",
+                labelCurrentPass: "የአሁኑ የይለፍ ቃል", labelNewPass: "አዲስ የይለፍ ቃል", labelConfirmPass: "አዲስ የይለፍ ቃል ያረጋግጡ",
+                updateProfile: "ፕሮፋይል አዘምን", changePass: "የይለፍ ቃል ቀይር",
+                labelLanguage: "ነባሪ ቋንቋ", labelTheme: "የቀለም ገጽታ", lightMode: "ቀላል ገጽታ", darkMode: "ጨለማ ገጽታ"
+            }
+        };
+
+        function updateLanguage(lang) {
+            document.getElementById('lang-indicator').innerText = lang.toUpperCase();
+            document.documentElement.lang = lang; // Update HTML lang attribute
+            
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                const text = translations[lang][key];
+                if (text) {
+                    if (el.tagName === 'INPUT' && el.placeholder) {
+                        el.placeholder = text;
+                    } else {
+                        el.innerText = text;
+                    }
+                }
+            });
+            // Update button active state
+            document.getElementById('lang-en').classList.remove('active');
+            document.getElementById('lang-am').classList.remove('active');
+            document.getElementById('lang-' + lang).classList.add('active');
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'am' : 'en';
+            updateLanguage(currentLang);
+        }
+
+        function setLanguageSetting(lang) {
+             currentLang = lang;
+             updateLanguage(lang);
+             // Also update the global toggle in the header
+             document.getElementById('lang-indicator').innerText = lang.toUpperCase();
+        }
+
+        // --- 2. Dark/Light Mode Toggle ---
+        function toggleTheme() {
+            setThemeSetting(currentTheme === 'light' ? 'dark' : 'light');
+        }
+
+        function setThemeSetting(theme) {
+            currentTheme = theme;
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            const icon = document.getElementById('theme-icon');
+
+            if (theme === 'dark') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                document.getElementById('theme-light').classList.remove('active');
+                document.getElementById('theme-dark').classList.add('active');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                document.getElementById('theme-dark').classList.remove('active');
+                document.getElementById('theme-light').classList.add('active');
+            }
+        }
+        
+        // --- 3. Login/Logout Simulation ---
+        function toggleLogin(event) {
+            const authButton = document.getElementById('auth-button');
+
+            if (isLoggedIn) {
+                event.preventDefault(); 
+                isLoggedIn = false;
+                authButton.href = "register.html";
+                authButton.innerHTML = `<span data-key="login">${translations[currentLang].login}</span> <i class="fas fa-sign-in-alt"></i>`;
+                authButton.classList.remove('logout');
+            } else {
+                isLoggedIn = true;
+                event.preventDefault(); 
+                authButton.href = "#"; 
+                authButton.innerHTML = `<span data-key="logout">${translations[currentLang].logout}</span> <i class="fas fa-sign-out-alt"></i>`;
+                authButton.classList.add('logout');
+            }
+        }
+        
+        // --- 4. Sidebar/Menu Toggle (for Mobile Responsiveness) ---
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+        
+        // --- 5. Active Link Highlighting ---
+        function highlightActiveLink() {
+            // Since this is setting.html, we mark the setting link as active
+            document.querySelectorAll('.sidebar li a').forEach(link => {
+                link.classList.remove('active');
+            });
+            const settingLink = document.querySelector('a[href="setting.html"]');
+            if (settingLink) {
+                settingLink.classList.add('active');
+            }
+        }
+
+
+        // Initialize on load
+        window.onload = function() {
+            updateLanguage(currentLang);
+            highlightActiveLink();
+            setThemeSetting(currentTheme); // Set initial theme for local buttons
+            
+            // Set initial login state (to show Logout button)
+             if (isLoggedIn) {
+                document.getElementById('auth-button').innerHTML = `<span data-key="logout">${translations[currentLang].logout}</span> <i class="fas fa-sign-out-alt"></i>`;
+                document.getElementById('auth-button').classList.add('logout');
+            }
+            
+            // Set initial theme icon in the header
+            if (document.body.classList.contains('dark-mode')) {
+                document.getElementById('theme-icon').classList.remove('fa-moon');
+                document.getElementById('theme-icon').classList.add('fa-sun');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="pageTitle">EthioCode - Modern Tech Training</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS Variables for Light/Dark Mode --- */
+        :root {
+            --primary-color: #059669; /* Emerald Green */
+            --secondary-color: #047857;
+            --bg-color: #ffffff;
+            --text-color: #1f2937;
+            --card-bg: #f3f4f6;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --border-color: #d1d5db;
+            --sidebar-width: 250px;
+        }
+
+        .dark-mode {
+            --primary-color: #34d399;
+            --secondary-color: #10b981;
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --card-bg: #1f2937;
+            --nav-bg: rgba(17, 24, 39, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            --border-color: #374151;
+        }
+
+        /* --- Global Reset & Base Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Noto Sans Ethiopic', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        /* --- Navigation Bar (Fixed Top) --- */
+        header {
+            position: sticky; top: 0; z-index: 1000;
+            background-color: var(--nav-bg);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            max-width: 1200px; margin: 0 auto; padding: 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none;
+        }
+        
+        /* Menu Toggle Button (for Mobile - JS Toggle) */
+        .menu-toggle {
+            display: none; 
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        /* Nav Links */
+        .nav-links { list-style: none; display: flex; gap: 20px; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-color); font-weight: 500;
+            padding: 5px 0; transition: var(--transition);
+        }
+        /* Link Hover Effect */
+        .nav-links a:hover {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        /* Dropdown Menu */
+        .dropdown { position: relative; }
+        .dropdown-content {
+            display: none; position: absolute; background-color: var(--card-bg);
+            min-width: 250px; box-shadow: var(--shadow); z-index: 1;
+            border-radius: 8px; overflow: hidden; top: 100%;
+        }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a {
+            color: var(--text-color); padding: 12px 16px; text-decoration: none;
+            display: block; transition: background-color 0.3s;
+        }
+        .dropdown-content a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: none;
+        }
+
+        /* Controls (Search, Theme, Language, Login) */
+        .controls { display: flex; gap: 15px; align-items: center; }
+        
+        /* Search Bar with Icon */
+        .search-bar { position: relative; }
+        .search-bar i {
+            position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+            color: var(--text-color); opacity: 0.6;
+            pointer-events: none;
+        }
+        .search-input {
+            padding: 8px 12px 8px 35px;
+            border: 1px solid var(--border-color); border-radius: 20px;
+            background: var(--bg-color); color: var(--text-color); width: 150px;
+            transition: width 0.3s, border-color 0.3s;
+        }
+        .search-input:focus {
+            width: 200px; border-color: var(--primary-color); outline: none;
+        }
+
+        .btn-icon {
+            background: none; border: none; color: var(--text-color); cursor: pointer;
+            font-size: 1.2rem; transition: var(--transition);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+        .logout { background-color: #ef4444; }
+        .logout:hover { background-color: #dc2626; }
+        
+        /* --- Dashboard/Content Layout --- */
+        .main-content-area {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+            min-height: 80vh;
+        }
+        
+        /* --- Sidebar (Dashboard Menu) --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            flex-shrink: 0;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .sidebar h3 { color: var(--primary-color); margin-bottom: 20px; border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; }
+        
+        .sidebar ul { list-style: none; }
+        .sidebar li a {
+            display: block; padding: 12px 10px; margin-bottom: 5px;
+            color: var(--text-color); text-decoration: none;
+            border-radius: 8px; transition: var(--transition);
+            display: flex; align-items: center; gap: 10px;
+        }
+        
+        /* Active link styling */
+        .sidebar li a.active {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* --- Main Content Area Placeholder --- */
+        .main-content-placeholder {
+            flex-grow: 1;
+            padding: 20px 30px;
+            text-align: center;
+        }
+
+        .main-content-placeholder h2 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .main-content-placeholder p {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 950px) {
+            .nav-links { display: none; }
+            .menu-toggle { display: block; } /* Show menu button */
+            
+            /* Sidebar behavior for mobile menu toggle */
+            .sidebar {
+                position: fixed; top: 0; left: -var(--sidebar-width); height: 100%;
+                z-index: 999; overflow-y: auto; box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+                /* JS toggles 'open' class to bring it into view */
+            }
+            
+            .sidebar.open { left: 0; }
+            
+            .main-content-area { flex-direction: column; padding: 20px; }
+        }
+        
+        @media (max-width: 600px) {
+            .logo { font-size: 1.3rem; }
+            .controls { gap: 10px; }
+            .search-input { width: 100px; padding: 8px 12px; }
+            .search-bar i { display: none; } /* Hide search icon on very small screen */
+            .btn-primary { padding: 8px 15px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div style="display: flex; align-items: center;">
+                 <div class="menu-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <a href="index.html" class="logo"><i class="fas fa-laptop-code"></i> EthioCode</a>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="home.html" data-key="home" class="active">Home</a></li>
+                
+                <li class="dropdown">
+                    <a href="#" data-key="courses">Courses <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="basic_computer_tutorial.html" data-key="basicComp">Basic Computer (MS-Office)</a>
+                        <a href="webdevelopment.html">Web Development</a>
+                        <a href="graphicdesign.html">Graphic Design</a>
+                        <a href="appdevelopment.html">App Development</a>
+                    </div>
+                </li>
+                
+                <li><a href="service.html" data-key="service">Services</a></li>
+                <li><a href="about.html" data-key="about">About</a></li>
+                <li><a href="contact.html" data-key="contact">Contact</a></li>
+            </ul>
+
+            <div class="controls">
+                
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search..." data-key="searchPlaceholder">
+                </div>
+                
+                <button class="btn-icon" onclick="toggleLanguage()" title="Switch Language">
+                    <i class="fas fa-language"></i> <span id="lang-indicator">EN</span>
+                </button>
+                
+                <button class="btn-icon" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                
+                <a href="register.html" id="auth-button" class="btn-primary" onclick="toggleLogin(event)">
+                    <span data-key="login">Login</span> <i class="fas fa-sign-in-alt"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content-area">
+        
+        <aside class="sidebar" id="sidebar">
+            <h3 data-key="dashboardTitle">Student Dashboard</h3>
+            <ul>
+                <li><a href="overview.html" class="active" data-key="overview"><i class="fas fa-tachometer-alt"></i> Overview</a></li>
+                <li><a href="mycourse.html" data-key="myCourses"><i class="fas fa-book-open"></i> My Courses</a></li>
+                <li><a href="schedule.html" data-key="schedule"><i class="fas fa-calendar-alt"></i> Schedule</a></li>
+                <li><a href="billing.html" data-key="billing"><i class="fas fa-file-invoice"></i> Billing</a></li>
+                <li><a href="setting.html" data-key="settings"><i class="fas fa-cogs"></i> Settings</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-content-placeholder">
+            <h2 data-key="portalWelcome">Welcome to the EthioCode Student Portal</h2>
+            <p data-key="portalMessage">
+                Please use the menu on the left (Dashboard) to navigate to your courses, view your schedule, and update your settings. Click "Login" if you are not yet authenticated.
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Set initial language to English as requested
+        let currentLang = 'en'; 
+        let isLoggedIn = false; // Initial state: Logged Out (showing Login)
+        
+        const translations = {
+            en: {
+                pageTitle: "EthioCode - Modern Tech Training",
+                home: "Home", courses: "Courses", service: "Services", about: "About", contact: "Contact",
+                searchPlaceholder: "Search...", register: "Register Now", login: "Login", logout: "Logout",
+                basicComp: "Basic Computer (MS-Office)",
+                dashboardTitle: "Student Dashboard",
+                overview: "Overview", myCourses: "My Courses", schedule: "Schedule", billing: "Billing", settings: "Settings",
+                portalWelcome: "Welcome to the EthioCode Student Portal",
+                portalMessage: "Please use the menu on the left (Dashboard) to navigate to your courses, view your schedule, and update your settings. Click 'Login' if you are not yet authenticated."
+            },
+            am: {
+                pageTitle: "ኢትዮኮድ - ዘመናዊ የቴክኖሎጂ ስልጠና",
+                home: "መነሻ", courses: "ኮርሶች", service: "አገልግሎቶች", about: "ስለ እኛ", contact: "አግኙን",
+                searchPlaceholder: "ይፈልጉ...", register: "አሁኑኑ ይመዝገቡ", login: "ግባ", logout: "ውጣ",
+                basicComp: "መሰረታዊ ኮምፒውተር (MS-Office)",
+                dashboardTitle: "የተማሪ ዳሽቦርድ",
+                overview: "አጠቃላይ እይታ", myCourses: "ኮርሶቼ", schedule: "የጊዜ ሰሌዳ", billing: "ክፍያ", settings: "ቅንብሮች",
+                portalWelcome: "እንኳን ደህና መጣህ ወደ ኢትዮኮድ ተማሪ ፖርታል",
+                portalMessage: "እባክዎ ወደ ኮርሶችዎ ለመሄድ፣ የጊዜ ሰሌዳዎን ለመመልከት እና ቅንብሮችን ለማዘመን በግራ በኩል ያለውን ሜኑ (ዳሽቦርድ) ይጠቀሙ። ገና ካልገቡ 'ግባ' የሚለውን ይጫኑ።"
+            }
+        };
+
+        function updateLanguage(lang) {
+            document.getElementById('lang-indicator').innerText = lang.toUpperCase();
+            
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                const text = translations[lang][key];
+                if (text) {
+                    if (el.tagName === 'INPUT' && el.placeholder) {
+                        el.placeholder = text;
+                    } else {
+                        el.innerText = text;
+                    }
+                }
+            });
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'am' : 'en';
+            updateLanguage(currentLang);
+        }
+
+        // --- 2. Dark/Light Mode Toggle ---
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('theme-icon');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+        
+        // --- 3. Login/Logout Simulation (The button toggles between Login/Logout state) ---
+        function toggleLogin(event) {
+            const authButton = document.getElementById('auth-button');
+
+            if (isLoggedIn) {
+                // If currently logged in, simulate logout
+                event.preventDefault(); 
+                isLoggedIn = false;
+                authButton.href = "register.html";
+                authButton.innerHTML = `<span data-key="login">${translations[currentLang].login}</span> <i class="fas fa-sign-in-alt"></i>`;
+                authButton.classList.remove('logout');
+            } else {
+                // If currently logged out, simulate login (and prevent default navigation for demo)
+                isLoggedIn = true;
+                event.preventDefault(); 
+                authButton.href = "#"; 
+                authButton.innerHTML = `<span data-key="logout">${translations[currentLang].logout}</span> <i class="fas fa-sign-out-alt"></i>`;
+                authButton.classList.add('logout');
+            }
+        }
+        
+        // --- 4. Sidebar/Menu Toggle (for Mobile Responsiveness - JS Toggle) ---
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+        
+        // --- 5. Active Link Highlighting (since we use separate files) ---
+        function highlightActiveLink() {
+            const path = window.location.pathname;
+            const page = path.split("/").pop(); // Gets the filename (e.g., index.html)
+            
+            document.querySelectorAll('.sidebar li a').forEach(link => {
+                if (link.getAttribute('href') === page) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+
+        // Initialize on load
+        window.onload = function() {
+            updateLanguage(currentLang);
+            highlightActiveLink();
+            
+            // Set initial theme icon
+            if (document.body.classList.contains('dark-mode')) {
+                document.getElementById('theme-icon').classList.remove('fa-moon');
+                document.getElementById('theme-icon').classList.add('fa-sun');
+            }
+        }
+    </script>
+</body>
+</html>

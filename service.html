@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="pageTitle">Our Services - EthioCode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS Variables for Light/Dark Mode (Primary Blue Accent) --- */
+        :root {
+            --primary-color: #059669; /* Green/Emerald Accent */
+            --secondary-color: #047857;
+            --bg-color: #ffffff;
+            --text-color: #1f2937;
+            --card-bg: #f3f4f6;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --border-color: #d1d5db;
+        }
+
+        .dark-mode {
+            --primary-color: #34d399; /* Lighter Green */
+            --secondary-color: #10b981;
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --card-bg: #1f2937;
+            --nav-bg: rgba(17, 24, 39, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            --border-color: #374151;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Noto Sans Ethiopic', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        /* --- Navigation Bar (Sticky Top) --- */
+        header {
+            position: sticky; top: 0; z-index: 1000;
+            background-color: var(--nav-bg);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            max-width: 1200px; margin: 0 auto; padding: 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none;
+        }
+
+        .controls { display: flex; gap: 15px; align-items: center; }
+        .btn-icon {
+            background: none; border: none; color: var(--text-color); cursor: pointer;
+            font-size: 1.2rem; transition: var(--transition);
+        }
+
+        /* --- Service Content Styling --- */
+        .service-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .section-header {
+            margin-bottom: 40px;
+        }
+        
+        .section-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        /* Service Cards Grid */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            background-color: var(--bg-color);
+        }
+
+        .service-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .cta-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Dark Mode Toggle Button */
+        .theme-toggle {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--primary-color); color: white;
+            width: 50px; height: 50px; border-radius: 50%;
+            border: none; cursor: pointer; font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        @media (max-width: 600px) {
+             .service-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><i class="fas fa-laptop-code"></i> EthioCode</a>
+            
+            <div class="controls">
+                <a href="index.html" class="back-btn" style="text-decoration: none; color: var(--text-color); font-weight: bold; display: flex; align-items: center; gap: 5px;"><span data-key="home">Home</span></a>
+                <button class="btn-icon" onclick="toggleLanguage()" title="Switch Language">
+                    <i class="fas fa-language"></i> <span id="lang-indicator">EN</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="service-container">
+        
+        <div class="section-header">
+            <h1 data-key="serviceHeader">Comprehensive Digital Services</h1>
+            <p data-key="serviceSubHeader">Beyond training, we offer professional development and IT solutions.</p>
+        </div>
+        
+        <div class="service-grid">
+            
+            <div class="service-card">
+                <i class="fas fa-globe"></i>
+                <h3 data-key="service1Title">Custom Web Development</h3>
+                <p data-key="service1Desc">Building responsive, high-performance websites and web applications tailored to your business needs, using modern frameworks.</p>
+                <a href="contact.html" class="cta-btn" data-key="getQuote">Get a Quote</a>
+            </div>
+            
+            <div class="service-card">
+                <i class="fas fa-chart-line"></i>
+                <h3 data-key="service2Title">Digital Marketing & SEO</h3>
+                <p data-key="service2Desc">Improving your online visibility and drive organic traffic through expert Search Engine Optimization (SEO) strategies.</p>
+                <a href="contact.html" class="cta-btn" data-key="getQuote">Get a Quote</a>
+            </div>
+            
+            <div class="service-card">
+                <i class="fas fa-paint-brush"></i>
+                <h3 data-key="service3Title">Graphic Design & Branding</h3>
+                <p data-key="service3Desc">Creating professional logos, branding materials, and digital assets that make your business stand out.</p>
+                <a href="contact.html" class="cta-btn" data-key="getQuote">Get a Quote</a>
+            </div>
+            
+            <div class="service-card">
+                <i class="fas fa-users"></i>
+                <h3 data-key="service4Title">Corporate IT Training</h3>
+                <p data-key="service4Desc">Customized training programs for companies looking to upskill their employees in new technologies (e.g., Python, Cloud). </p>
+                <a href="contact.html" class="cta-btn" data-key="inquire">Inquire Now</a>
+            </div>
+
+        </div>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+
+    <script>
+        // --- 1. Language Handling (English / Amharic) ---
+        let currentLang = 'en';
+        
+        const translations = {
+            en: {
+                pageTitle: "Our Services - EthioCode",
+                home: "Home",
+                serviceHeader: "Comprehensive Digital Services",
+                serviceSubHeader: "Beyond training, we offer professional development and IT solutions.",
+                service1Title: "Custom Web Development",
+                service1Desc: "Building responsive, high-performance websites and web applications tailored to your business needs, using modern frameworks.",
+                service2Title: "Digital Marketing & SEO",
+                service2Desc: "Improving your online visibility and drive organic traffic through expert Search Engine Optimization (SEO) strategies.",
+                service3Title: "Graphic Design & Branding",
+                service3Desc: "Creating professional logos, branding materials, and digital assets that make your business stand out.",
+                service4Title: "Corporate IT Training",
+                service4Desc: "Customized training programs for companies looking to upskill their employees in new technologies (e.g., Python, Cloud).",
+                getQuote: "Get a Quote",
+                inquire: "Inquire Now"
+            },
+            am: {
+                pageTitle: "የእኛ አገልግሎቶች - ኢትዮኮድ",
+                home: "መነሻ",
+                serviceHeader: "ሁሉን አቀፍ የዲጂታል አገልግሎቶች",
+                serviceSubHeader: "ከስልጠና ባሻገር፣ ሙያዊ ልማት እና የአይቲ መፍትሄዎችን እናቀርባለን።",
+                service1Title: "ብጁ የድረ-ገጽ ግንባታ",
+                service1Desc: "በዘመናዊ የቴክኖሎጂ አውታሮች በመጠቀም ለንግድዎ ፍላጎት ተስማሚ የሆኑ ምላሽ ሰጪ እና ከፍተኛ አፈጻጸም ያላቸውን ድር ጣቢያዎች እና አፕሊኬሽኖችን መገንባት።",
+                service2Title: "ዲጂታል ማርኬቲንግ እና SEO",
+                service2Desc: "በሙያዊ የፍለጋ ፕሮግራም ማመቻቸት (SEO) ስልቶች አማካኝነት የመስመር ላይ ታይነትዎን ማሻሻል እና የኦርጋኒክ ትራፊክ መጨመር።",
+                service3Title: "ግራፊክ ዲዛይን እና ብራንዲንግ",
+                service3Desc: "ንግድዎን ጎላ የሚያደርጉ ሙያዊ ሎጎዎችን፣ የብራንዲንግ ቁሳቁሶችን እና ዲጂታል ንብረቶችን መፍጠር።",
+                service4Title: "የኮርፖሬት አይቲ ስልጠና",
+                service4Desc: "ሰራተኞቻቸውን በአዳዲስ ቴክኖሎጂዎች (ለምሳሌ ፓይዘን፣ ክላውድ) ለማሰልጠን ለሚፈልጉ ኩባንያዎች የተበጁ የስልጠና ፕሮግራሞች።",
+                getQuote: "ዋጋ ይጠይቁ",
+                inquire: "አሁን ይጠይቁ"
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'am' : 'en';
+            document.getElementById('lang-indicator').innerText = currentLang.toUpperCase();
+            
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
+            });
+        }
+        
+        // --- 2. Dark/Light Mode Toggle ---
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('theme-icon');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        // Initialize with default Amharic for Ethiopian context
+        window.onload = function() {
+            toggleLanguage();
+        }
+    </script>
+</body>
+</html>

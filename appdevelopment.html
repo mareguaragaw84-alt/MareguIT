@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="pageTitle">App Development Courses - EthioCode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS Variables for Light/Dark Mode (New Accent Color: Teal/Cyan) --- */
+        :root {
+            --primary-color: #0d9488; /* Teal Accent */
+            --secondary-color: #0f766e;
+            --bg-color: #ffffff;
+            --text-color: #1f2937;
+            --card-bg: #f3f4f6;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary-color: #2dd4bf; /* Lighter Cyan */
+            --secondary-color: #14b8a6;
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --card-bg: #1f2937;
+            --nav-bg: rgba(17, 24, 39, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Noto Sans Ethiopic', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        /* --- Navigation Bar --- */
+        header {
+            position: sticky; top: 0; z-index: 1000;
+            background-color: var(--nav-bg);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            max-width: 1200px; margin: 0 auto; padding: 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none;
+        }
+
+        /* Controls */
+        .controls { display: flex; gap: 15px; align-items: center; }
+        .btn-icon {
+            background: none; border: none; color: var(--text-color); cursor: pointer;
+            font-size: 1.2rem; transition: var(--transition);
+        }
+        .btn-icon:hover { color: var(--primary-color); transform: scale(1.1); }
+        .back-btn { text-decoration: none; color: var(--text-color); font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .back-btn:hover { color: var(--primary-color); }
+
+        /* --- Course Grid --- */
+        .course-container { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h1 { font-size: 2.5rem; color: var(--primary-color); }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            border: 1px solid rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .course-card:hover { transform: translateY(-5px); }
+
+        .card-header {
+            background-color: var(--primary-color);
+            padding: 15px 0;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .card-body { padding: 20px; }
+        .price { font-size: 1.8rem; font-weight: bold; color: var(--primary-color); margin: 10px 0;}
+        .duration { font-size: 0.9rem; opacity: 0.8; margin-bottom: 15px;}
+        .list-item { list-style: none; padding: 5px 0; border-bottom: 1px dashed var(--border-color, #ccc);}
+        .list-item:last-child { border-bottom: none; }
+
+        .enroll-btn {
+            width: 80%; padding: 10px; margin-top: 20px;
+            background: var(--primary-color); color: white;
+            border: none; border-radius: 5px; cursor: pointer;
+            font-weight: bold; transition: 0.3s; text-decoration: none;
+            display: inline-block;
+        }
+
+        .enroll-btn:hover { background: var(--secondary-color); }
+        
+        /* Dark Mode Toggle Button */
+        .theme-toggle {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--primary-color); color: white;
+            width: 50px; height: 50px; border-radius: 50%;
+            border: none; cursor: pointer; font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><i class="fas fa-laptop-code"></i> EthioCode</a>
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> <span data-key="backHome">Back to Home</span></a>
+            
+            <div class="controls">
+                <button class="btn-icon" onclick="toggleLanguage()" title="Switch Language">
+                    <i class="fas fa-language"></i> <span id="lang-indicator">EN</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="course-container">
+        <div class="section-title">
+            <h1 data-key="header">Mobile App Development Packages</h1>
+            <p data-key="subHeader">Build native and cross-platform mobile applications.</p>
+        </div>
+
+        <div class="course-grid">
+            
+            <div class="course-card">
+                <div class="card-header" data-key="androidTitle">Native Android Development</div>
+                <div class="card-body">
+                    <p class="duration" data-key="duration">Duration: 3 Months</p>
+                    <span class="price">20,000 ETB</span>
+                    <ul style="padding: 0;">
+                        <li class="list-item">Kotlin Fundamentals</li>
+                        <li class="list-item">Android Studio IDE</li>
+                        <li class="list-item">UI/UX for Android</li>
+                        <li class="list-item" data-key="playstore">App Store Deployment</li>
+                    </ul>
+                    <a href="register.html" class="enroll-btn" data-key="registerBtn">Register Now</a>
+                </div>
+            </div>
+
+            <div class="course-card" style="border: 3px solid var(--primary-color);">
+                <div class="card-header" style="background-color: var(--secondary-color);" data-key="reactTitle">React Native Developer (Recommended)</div>
+                <div class="card-body">
+                    <p class="duration" data-key="duration">Duration: 4 Months</p>
+                    <span class="price">25,500 ETB</span>
+                    <ul style="padding: 0;">
+                        <li class="list-item">JavaScript & React Basics</li>
+                        <li class="list-item">Redux for State Management</li>
+                        <li class="list-item">iOS and Android Builds from one code</li>
+                        <li class="list-item" data-key="apis">External API Integration</li>
+                        <li class="list-item" data-key="capstone">Capstone Project & Portfolio</li>
+                    </ul>
+                    <a href="register.html" class="enroll-btn" data-key="registerBtn">Register Now</a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="card-header" data-key="flutterTitle">Flutter & Dart Cross-Platform</div>
+                <div class="card-body">
+                    <p class="duration" data-key="duration">Duration: 3 Months</p>
+                    <span class="price">24,800 ETB</span>
+                    <ul style="padding: 0;">
+                        <li class="list-item">Dart Programming Language</li>
+                        <li class="list-item">Widgets & UI Building</li>
+                        <li class="list-item">Firebase Integration</li>
+                        <li class="list-item" data-key="data">Data Persistence</li>
+                    </ul>
+                    <a href="register.html" class="enroll-btn" data-key="registerBtn">Register Now</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+
+    <script>
+        // --- 1. Language Handling (English / Amharic) ---
+        let currentLang = 'en';
+        
+        const translations = {
+            en: {
+                pageTitle: "App Development Courses - EthioCode",
+                backHome: "Back to Home",
+                header: "Mobile App Development Packages",
+                subHeader: "Build native and cross-platform mobile applications.",
+                androidTitle: "Native Android Development",
+                reactTitle: "React Native Developer (Recommended)",
+                flutterTitle: "Flutter & Dart Cross-Platform",
+                duration: "Duration:",
+                playstore: "App Store Deployment",
+                apis: "External API Integration",
+                capstone: "Capstone Project & Portfolio",
+                data: "Data Persistence",
+                registerBtn: "Register Now"
+            },
+            am: {
+                pageTitle: "የአፕልኬሽን ግንባታ ኮርሶች - ኢትዮኮድ",
+                backHome: "ወደ መነሻ ገጽ",
+                header: "የሞባይል አፕልኬሽን ግንባታ አማራጮች",
+                subHeader: "Native እና Cross-platform አፕልኬሽኖችን ይገንቡ።",
+                androidTitle: "Native Android ግንባታ",
+                reactTitle: "React Native ገንቢ (የሚመከር)",
+                flutterTitle: "Flutter & Dart Cross-Platform",
+                duration: "የሚፈጀው ጊዜ:",
+                playstore: "App Store ላይ መልቀቅ",
+                apis: "የውጭ API ማገናኘት",
+                capstone: "ዋና ፕሮጀክት እና ፖርትፎሊዮ",
+                data: "የዳታ ማቆየት",
+                registerBtn: "አሁን ይመዝገቡ"
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'am' : 'en';
+            document.getElementById('lang-indicator').innerText = currentLang.toUpperCase();
+            
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
+            });
+        }
+        
+        // --- 2. Dark/Light Mode Toggle ---
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('theme-icon');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        // Initialize with default Amharic for Ethiopian context
+        window.onload = function() {
+            toggleLanguage();
+        }
+    </script>
+</body>
+</html>

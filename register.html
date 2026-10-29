@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-key="pageTitle">Register Now - EthioCode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS Variables for Light/Dark Mode (Same as index.html) --- */
+        :root {
+            --primary-color: #059669; /* Emerald Green */
+            --secondary-color: #047857;
+            --bg-color: #ffffff;
+            --text-color: #1f2937;
+            --card-bg: #f3f4f6;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --border-color: #d1d5db;
+        }
+
+        .dark-mode {
+            --primary-color: #34d399;
+            --secondary-color: #10b981;
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --card-bg: #1f2937;
+            --nav-bg: rgba(17, 24, 39, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            --border-color: #374151;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Noto Sans Ethiopic', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        /* --- Navigation Bar (Simple Nav for Registration) --- */
+        header {
+            position: sticky; top: 0; z-index: 1000;
+            background-color: var(--nav-bg);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            max-width: 1200px; margin: 0 auto; padding: 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none;
+        }
+
+        .controls { display: flex; gap: 15px; align-items: center; }
+        .btn-icon {
+            background: none; border: none; color: var(--text-color); cursor: pointer;
+            font-size: 1.2rem; transition: var(--transition);
+        }
+        
+        /* --- Registration Form Layout --- */
+        .register-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .register-container h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.3); /* Primary color shadow */
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .alert-error {
+            color: #ef4444; /* Red */
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none; /* Hidden by default */
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .login-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* Dark Mode Toggle Button */
+        .theme-toggle {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--primary-color); color: white;
+            width: 50px; height: 50px; border-radius: 50%;
+            border: none; cursor: pointer; font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 650px) {
+            .register-container {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><i class="fas fa-laptop-code"></i> EthioCode</a>
+            <a href="index.html" class="back-btn" style="text-decoration: none; color: var(--text-color); font-weight: bold; display: flex; align-items: center; gap: 5px;"><span data-key="home">Home</span></a>
+            
+            <div class="controls">
+                <button class="btn-icon" onclick="toggleLanguage()" title="Switch Language">
+                    <i class="fas fa-language"></i> <span id="lang-indicator">EN</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="register-container">
+        <h2 data-key="formTitle">Student Registration Form</h2>
+        
+        <form id="registration-form">
+            
+            <div class="form-group">
+                <label for="fullName" data-key="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" required>
+                <div class="alert-error" id="name-error" data-key="nameError">Name is required.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" data-key="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+                <div class="alert-error" id="email-error" data-key="emailError">Please enter a valid email.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone" data-key="phone">Phone Number (e.g. 09xxxxxxxx)</label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+                <div class="alert-error" id="phone-error" data-key="phoneError">Phone number must be 10 digits.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="course" data-key="course">Select Course</label>
+                <select id="course" name="course" required>
+                    <option value="" disabled selected data-key="selectCourse">-- Select a Course --</option>
+                    <option value="web-dev" data-key="webDev">Web Development</option>
+                    <option value="graphic-design" data-key="graphicDesign">Graphic Design</option>
+                    <option value="app-dev" data-key="appDev">Mobile App Development</option>
+                    <option value="python" data-key="python">Python Programming</option>
+                </select>
+                <div class="alert-error" id="course-error" data-key="courseError">Please select a course.</div>
+            </div>
+            
+            <button type="submit" class="btn-submit" data-key="submitBtn">Complete Registration</button>
+        </form>
+        
+        <div class="login-link">
+            <p data-key="hasAccount">Already have an account? <a href="index.html" data-key="loginLink">Log In</a></p>
+        </div>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+
+    <script>
+        // --- 1. Language Handling (English / Amharic) ---
+        let currentLang = 'en';
+        
+        const translations = {
+            en: {
+                pageTitle: "Register Now - EthioCode",
+                home: "Home",
+                formTitle: "Student Registration Form",
+                fullName: "Full Name",
+                email: "Email Address",
+                phone: "Phone Number (e.g. 09xxxxxxxx)",
+                course: "Select Course",
+                selectCourse: "-- Select a Course --",
+                webDev: "Web Development",
+                graphicDesign: "Graphic Design",
+                appDev: "Mobile App Development",
+                python: "Python Programming",
+                submitBtn: "Complete Registration",
+                hasAccount: "Already have an account?",
+                loginLink: "Log In",
+                nameError: "Full Name is required.",
+                emailError: "Please enter a valid email.",
+                phoneError: "Phone number must be 10 digits.",
+                courseError: "Please select a course."
+            },
+            am: {
+                pageTitle: "አሁኑኑ ይመዝገቡ - ኢትዮኮድ",
+                home: "መነሻ",
+                formTitle: "የተማሪ ምዝገባ ፎርም",
+                fullName: "ሙሉ ስም",
+                email: "ኢሜይል አድራሻ",
+                phone: "ስልክ ቁጥር (ለምሳሌ 09xxxxxxxx)",
+                course: "ኮርስ ይምረጡ",
+                selectCourse: "-- ኮርስ ይምረጡ --",
+                webDev: "የድር ግንባታ",
+                graphicDesign: "ግራፊክ ዲዛይን",
+                appDev: "የሞባይል አፕልኬሽን ግንባታ",
+                python: "ፓይዘን ፕሮግራሚንግ",
+                submitBtn: "ምዝገባን ያጠናቅቁ",
+                hasAccount: "አካውንት አለዎት?",
+                loginLink: "ይግቡ",
+                nameError: "ሙሉ ስም ማስገባት ግዴታ ነው።",
+                emailError: "ትክክለኛ ኢሜይል ያስገቡ።",
+                phoneError: "ስልክ ቁጥሩ 10 አሃዝ መሆን አለበት።",
+                courseError: "እባክዎን ኮርስ ይምረጡ።"
+            }
+        };
+
+        function updateLanguage(lang) {
+            document.getElementById('lang-indicator').innerText = lang.toUpperCase();
+            
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                const text = translations[lang][key];
+                if (text) {
+                    if (el.tagName === 'OPTION' && el.value === '') {
+                         // Update placeholder option text
+                         el.innerText = text;
+                    } else if (el.tagName !== 'INPUT' && el.tagName !== 'SELECT') {
+                        el.innerText = text;
+                    }
+                }
+            });
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'am' : 'en';
+            updateLanguage(currentLang);
+        }
+        
+        // --- 2. Dark/Light Mode Toggle ---
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('theme-icon');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+        
+        // --- 3. Form Validation (JavaScript) ---
+        document.getElementById('registration-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            let isValid = true;
+            
+            // Function to show/hide error message
+            const validateField = (id, errorId, condition) => {
+                const errorElement = document.getElementById(errorId);
+                if (condition) {
+                    errorElement.style.display = 'block';
+                    isValid = false;
+                } else {
+                    errorElement.style.display = 'none';
+                }
+            };
+
+            // 1. Validate Name
+            validateField('fullName', 'name-error', document.getElementById('fullName').value.trim() === '');
+            
+            // 2. Validate Email
+            const emailValue = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            validateField('email', 'email-error', !emailRegex.test(emailValue));
+
+            // 3. Validate Phone (10 digits only)
+            const phoneValue = document.getElementById('phone').value.trim();
+            validateField('phone', 'phone-error', !/^\d{10}$/.test(phoneValue));
+            
+            // 4. Validate Course Selection
+            validateField('course', 'course-error', document.getElementById('course').value === '');
+
+            if (isValid) {
+                // If validation passes, simulate success (In a real app, this sends data to a server)
+                alert("Registration Successful! Welcome to EthioCode.");
+                this.reset(); // Clear the form
+            }
+        });
+
+
+        // Initialize with default Amharic for Ethiopian context
+        window.onload = function() {
+            toggleLanguage();
+        }
+    </script>
+</body>
+</html>

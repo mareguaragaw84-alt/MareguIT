@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maregu Aragaw Training Center</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* --- CSS Variables for Light/Dark Mode --- */
+       
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-laptop-code"></i> EthioCode
+            </div>
+
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search courses...">
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="index.html" data-key="home">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" data-key="courses">Courses <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                          <a href="basic_computer_tutorial.html">Basic Computer Tutorial </a>
+                        <a href="webdevelopment.html">Web Development</a>
+                        <a href="graphicdesign.html">Graphic Design</a>
+                        <a href="appdevelopment.html">App Development</a>
+                    </div>
+                </li>
+                <li><a href="about.html" data-key="about">About</a></li>
+                <li><a href="register.html" data-key="about">Register</a></li>
+                <li><a href="contact.html" data-key="about">Contact us</a></li>
+                <li><a href="service.html" data-key="about">Service</a></li>
+                
+                
+                
+            </ul>
+
+            <div class="controls">
+                <button class="btn-icon" onclick="toggleLanguage()" title="Switch Language">
+                    <i class="fas fa-language"></i> <span id="lang-indicator">EN</span>
+                </button>
+                <button class="btn-icon" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <button class="btn-primary" id="loginBtn" onclick="toggleLogin()">
+                    <span data-key="login">Login</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1 id="hero-title">Master <span id="hero-span">Web Development</span></h1>
+        <p id="hero-desc" data-key="heroText">Join the best computer training center to build your future. Learn HTML, CSS, and JavaScript from scratch.</p>
+        <button class="btn-primary"> <a href="course.html">Get Started</a></button>
+    </section>
+
+    <div class="container">
+        <div class="card">
+            <i class="fab fa-html5"></i>
+            <h3 data-key="htmlCard">HTML5 Expert</h3>
+            <p data-key="htmlDesc">Learn the structure of modern web pages.</p>
+        </div>
+        <div class="card">
+            <i class="fab fa-css3-alt"></i>
+            <h3 data-key="cssCard">CSS3 Styling</h3>
+            <p data-key="cssDesc">Master responsive design and animations.</p>
+        </div>
+        <div class="card">
+            <i class="fab fa-js"></i>
+            <h3 data-key="jsCard">JavaScript Logic</h3>
+            <p data-key="jsDesc">Build interactive and dynamic websites.</p>
+        </div>
+    </div>
+
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleLogin()">&times;</span>
+            <h2 style="margin-bottom: 20px; text-align: center;" data-key="login">Login</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label data-key="email">Email Address</label>
+                    <input type="email" required placeholder="example@email.com">
+                </div>
+                <div class="form-group">
+                    <label data-key="password">Password</label>
+                    <input type="password" required placeholder="******">
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;" data-key="loginBtnAction">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="scrpit.js">
+        // --- 1. Language Handling (English / Amharic) ---
+       
+    </script>
+</body>
+</html>
