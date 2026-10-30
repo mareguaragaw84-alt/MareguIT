@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- CSS Variables for Light/Dark Mode --- */
+        /* --- CSS Variables --- */
         :root {
             --primary-color: #059669; /* Emerald Green */
             --secondary-color: #047857;
@@ -18,7 +18,7 @@
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
             --border-color: #d1d5db;
-            --sidebar-width: 250px;
+            --sidebar-width: 260px;
         }
 
         .dark-mode {
@@ -33,48 +33,79 @@
         }
 
         /* --- Global Reset & Base Styles --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Noto Sans Ethiopic', sans-serif; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Segoe UI', 'Noto Sans Ethiopic', sans-serif; 
+        }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             transition: var(--transition);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* --- Navigation Bar (Fixed Top) --- */
+        /* --- Navigation Bar --- */
         header {
-            position: sticky; top: 0; z-index: 1000;
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
             background-color: var(--nav-bg);
             box-shadow: var(--shadow);
             backdrop-filter: blur(10px);
         }
 
         nav {
-            max-width: 1200px; margin: 0 auto; padding: 1rem;
-            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0.8rem 1.5rem;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .logo {
-            font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none;
+            font-size: 1.4rem; 
+            font-weight: bold; 
+            color: var(--primary-color); 
+            text-decoration: none;
+            white-space: nowrap;
         }
         
-        /* Menu Toggle Button (for Mobile - JS Toggle) */
         .menu-toggle {
             display: none; 
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--text-color);
             cursor: pointer;
-            margin-right: 15px;
+            padding: 5px;
         }
 
         /* Nav Links */
-        .nav-links { list-style: none; display: flex; gap: 20px; }
-        .nav-links a {
-            text-decoration: none; color: var(--text-color); font-weight: 500;
-            padding: 5px 0; transition: var(--transition);
+        .nav-links { 
+            list-style: none; 
+            display: flex; 
+            gap: 20px; 
+            align-items: center;
         }
-        /* Link Hover Effect */
+
+        .nav-links a {
+            text-decoration: none; 
+            color: var(--text-color); 
+            font-weight: 500;
+            padding: 5px 0; 
+            transition: var(--transition);
+        }
+
         .nav-links a:hover {
             color: var(--primary-color);
             border-bottom: 2px solid var(--primary-color);
@@ -83,108 +114,182 @@
         /* Dropdown Menu */
         .dropdown { position: relative; }
         .dropdown-content {
-            display: none; position: absolute; background-color: var(--card-bg);
-            min-width: 250px; box-shadow: var(--shadow); z-index: 1;
-            border-radius: 8px; overflow: hidden; top: 100%;
+            display: none; 
+            position: absolute; 
+            background-color: var(--card-bg);
+            min-width: 220px; 
+            box-shadow: var(--shadow); 
+            z-index: 10;
+            border-radius: 8px; 
+            overflow: hidden; 
+            top: 100%;
+            left: 0;
         }
+
         .dropdown:hover .dropdown-content { display: block; }
+
         .dropdown-content a {
-            color: var(--text-color); padding: 12px 16px; text-decoration: none;
-            display: block; transition: background-color 0.3s;
+            color: var(--text-color); 
+            padding: 12px 16px; 
+            text-decoration: none;
+            display: block; 
+            transition: background-color 0.3s;
         }
+
         .dropdown-content a:hover {
             background-color: var(--primary-color);
             color: white;
             border-bottom: none;
         }
 
-        /* Controls (Search, Theme, Language, Login) */
-        .controls { display: flex; gap: 15px; align-items: center; }
+        /* Controls Area */
+        .controls { 
+            display: flex; 
+            gap: 12px; 
+            align-items: center; 
+        }
         
-        /* Search Bar with Icon */
         .search-bar { position: relative; }
+        
         .search-bar i {
-            position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
-            color: var(--text-color); opacity: 0.6;
+            position: absolute; 
+            left: 10px; 
+            top: 50%; 
+            transform: translateY(-50%);
+            color: var(--text-color); 
+            opacity: 0.6;
             pointer-events: none;
         }
+
         .search-input {
-            padding: 8px 12px 8px 35px;
-            border: 1px solid var(--border-color); border-radius: 20px;
-            background: var(--bg-color); color: var(--text-color); width: 150px;
+            padding: 8px 12px 8px 32px;
+            border: 1px solid var(--border-color); 
+            border-radius: 20px;
+            background: var(--bg-color); 
+            color: var(--text-color); 
+            width: 140px;
             transition: width 0.3s, border-color 0.3s;
+            font-size: 0.9rem;
         }
+
         .search-input:focus {
-            width: 200px; border-color: var(--primary-color); outline: none;
+            width: 180px; 
+            border-color: var(--primary-color); 
+            outline: none;
         }
 
         .btn-icon {
-            background: none; border: none; color: var(--text-color); cursor: pointer;
-            font-size: 1.2rem; transition: var(--transition);
+            background: none; 
+            border: none; 
+            color: var(--text-color); 
+            cursor: pointer;
+            font-size: 1.1rem; 
+            padding: 6px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition);
+        }
+
+        .btn-icon:hover {
+            background-color: var(--card-bg);
         }
         
         .btn-primary {
             background-color: var(--primary-color);
             color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 8px 16px;
+            border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
+            white-space: nowrap;
+            font-size: 0.9rem;
             transition: background-color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-primary:hover {
             background-color: var(--secondary-color);
         }
+
         .logout { background-color: #ef4444; }
         .logout:hover { background-color: #dc2626; }
         
-        /* --- Dashboard/Content Layout --- */
+        /* Overlay Backdrop for Mobile Menu/Sidebar */
+        .backdrop {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            display: none;
+            backdrop-filter: blur(2px);
+        }
+        .backdrop.active { display: block; }
+
+        /* --- Dashboard Layout --- */
         .main-content-area {
             display: flex;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px 0;
-            min-height: 80vh;
+            padding: 20px;
+            min-height: calc(100vh - 80px);
+            gap: 20px;
         }
         
-        /* --- Sidebar (Dashboard Menu) --- */
+        /* --- Sidebar --- */
         .sidebar {
             width: var(--sidebar-width);
             flex-shrink: 0;
             padding: 20px;
             background-color: var(--card-bg);
-            border-right: 1px solid var(--border-color);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            height: fit-content;
             transition: transform 0.3s ease-in-out;
         }
         
-        .sidebar h3 { color: var(--primary-color); margin-bottom: 20px; border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; }
+        .sidebar h3 { 
+            color: var(--primary-color); 
+            margin-bottom: 20px; 
+            border-bottom: 2px solid var(--primary-color); 
+            padding-bottom: 10px; 
+            font-size: 1.1rem;
+        }
         
         .sidebar ul { list-style: none; }
+
         .sidebar li a {
-            display: block; padding: 12px 10px; margin-bottom: 5px;
-            color: var(--text-color); text-decoration: none;
-            border-radius: 8px; transition: var(--transition);
-            display: flex; align-items: center; gap: 10px;
+            padding: 10px 12px; 
+            margin-bottom: 6px;
+            color: var(--text-color); 
+            text-decoration: none;
+            border-radius: 8px; 
+            transition: var(--transition);
+            display: flex; 
+            align-items: center; 
+            gap: 12px;
+            font-weight: 500;
         }
         
-        /* Active link styling */
-        .sidebar li a.active {
+        .sidebar li a:hover, .sidebar li a.active {
             background-color: var(--primary-color);
             color: white;
-            transform: translateX(5px);
         }
 
-        /* --- Main Content Area Placeholder --- */
+        /* --- Main Content Area --- */
         .main-content-placeholder {
             flex-grow: 1;
-            padding: 20px 30px;
-            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
         }
 
         .main-content-placeholder h2 {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: var(--secondary-color);
+            font-size: 1.5rem;
         }
         
         .main-content-placeholder p {
@@ -193,46 +298,119 @@
             border-radius: 8px;
             box-shadow: var(--shadow);
             border-left: 5px solid var(--primary-color);
+            font-size: 1rem;
         }
-        
-        /* --- Responsive Design --- */
-        @media (max-width: 950px) {
-            .nav-links { display: none; }
-            .menu-toggle { display: block; } /* Show menu button */
-            
-            /* Sidebar behavior for mobile menu toggle */
-            .sidebar {
-                position: fixed; top: 0; left: -var(--sidebar-width); height: 100%;
-                z-index: 999; overflow-y: auto; box-shadow: 4px 0 10px rgba(0,0,0,0.3);
-                /* JS toggles 'open' class to bring it into view */
+
+        /* --- Responsive Styles (Media Queries) --- */
+
+        /* Laptop & Large Tablet (Under 1024px) */
+        @media (max-width: 1024px) {
+            .search-input { width: 120px; }
+            .search-input:focus { width: 150px; }
+            .nav-links { gap: 12px; }
+        }
+
+        /* Tablet (Under 868px) */
+        @media (max-width: 868px) {
+            .menu-toggle { display: block; }
+
+            /* Modern Mobile Nav Menu */
+            .nav-links {
+                position: fixed;
+                top: 0; left: -100%;
+                width: 280px; height: 100vh;
+                background-color: var(--card-bg);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 80px 20px 20px 20px;
+                box-shadow: var(--shadow);
+                transition: left 0.3s ease;
+                z-index: 999;
             }
+
+            .nav-links.open { left: 0; }
+
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                background: transparent;
+                padding-left: 15px;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0; right: -100%;
+                width: var(--sidebar-width);
+                height: 100vh;
+                z-index: 999;
+                border-radius: 0;
+                overflow-y: auto;
+                transition: right 0.3s ease;
+            }
+
+            .sidebar.open { right: 0; }
+
+            .main-content-area {
+                flex-direction: column;
+                padding: 15px;
+            }
+        }
+
+        /* Mobile Phones (Under 576px) */
+        @media (max-width: 576px) {
+            nav { padding: 0.8rem 1rem; }
+            .logo { font-size: 1.2rem; }
+
+            .search-bar { display: none; } /* Hide search bar on tiny screens or keep simple icon */
             
-            .sidebar.open { left: 0; }
+            .controls { gap: 8px; }
             
-            .main-content-area { flex-direction: column; padding: 20px; }
+            .btn-primary { 
+                padding: 6px 12px; 
+                font-size: 0.8rem; 
+            }
+
+            .main-content-placeholder h2 { font-size: 1.2rem; }
+            .main-content-placeholder p { font-size: 0.9rem; padding: 15px; }
+            
+            .btn-dashboard-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                background-color: var(--card-bg);
+                border: 1px solid var(--border-color);
+                color: var(--text-color);
+                padding: 10px;
+                border-radius: 8px;
+                width: 100%;
+                margin-bottom: 15px;
+                cursor: pointer;
+                font-weight: 600;
+            }
         }
         
-        @media (max-width: 600px) {
-            .logo { font-size: 1.3rem; }
-            .controls { gap: 10px; }
-            .search-input { width: 100px; padding: 8px 12px; }
-            .search-bar i { display: none; } /* Hide search icon on very small screen */
-            .btn-primary { padding: 8px 15px; font-size: 0.9rem; }
+        /* Dashboard Mobile Toggle Button Hide by default for Desktop */
+        .btn-dashboard-toggle { display: none; }
+        @media (max-width: 868px) {
+            .btn-dashboard-toggle { display: flex; }
         }
     </style>
 </head>
 <body>
 
+    <div class="backdrop" id="backdrop" onclick="closeAllMenus()"></div>
+
     <header>
         <nav>
-            <div style="display: flex; align-items: center;">
-                 <div class="menu-toggle" onclick="toggleSidebar()">
+            <div class="nav-brand">
+                <div class="menu-toggle" onclick="toggleNavMenu()">
                     <i class="fas fa-bars"></i>
                 </div>
                 <a href="index.html" class="logo"><i class="fas fa-laptop-code"></i> EthioCode</a>
             </div>
             
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="home.html" data-key="home" class="active">Home</a></li>
                 
                 <li class="dropdown">
@@ -251,7 +429,6 @@
             </ul>
 
             <div class="controls">
-                
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
                     <input type="text" id="searchInput" class="search-input" placeholder="Search..." data-key="searchPlaceholder">
@@ -274,6 +451,11 @@
 
     <div class="main-content-area">
         
+        <!-- Mobile Dashboard Trigger Button -->
+        <button class="btn-dashboard-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-columns"></i> <span data-key="dashboardTitle">Student Dashboard</span> Menu
+        </button>
+
         <aside class="sidebar" id="sidebar">
             <h3 data-key="dashboardTitle">Student Dashboard</h3>
             <ul>
@@ -294,9 +476,8 @@
     </div>
     
     <script>
-        // Set initial language to English as requested
         let currentLang = 'en'; 
-        let isLoggedIn = false; // Initial state: Logged Out (showing Login)
+        let isLoggedIn = false; 
         
         const translations = {
             en: {
@@ -342,7 +523,7 @@
             updateLanguage(currentLang);
         }
 
-        // --- 2. Dark/Light Mode Toggle ---
+        /* --- Dark/Light Theme Switcher --- */
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             const icon = document.getElementById('theme-icon');
@@ -355,19 +536,17 @@
             }
         }
         
-        // --- 3. Login/Logout Simulation (The button toggles between Login/Logout state) ---
+        /* --- Login State Switcher --- */
         function toggleLogin(event) {
             const authButton = document.getElementById('auth-button');
 
             if (isLoggedIn) {
-                // If currently logged in, simulate logout
                 event.preventDefault(); 
                 isLoggedIn = false;
                 authButton.href = "register.html";
                 authButton.innerHTML = `<span data-key="login">${translations[currentLang].login}</span> <i class="fas fa-sign-in-alt"></i>`;
                 authButton.classList.remove('logout');
             } else {
-                // If currently logged out, simulate login (and prevent default navigation for demo)
                 isLoggedIn = true;
                 event.preventDefault(); 
                 authButton.href = "#"; 
@@ -376,15 +555,38 @@
             }
         }
         
-        // --- 4. Sidebar/Menu Toggle (for Mobile Responsiveness - JS Toggle) ---
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
+        /* --- Mobile Navigation and Sidebar Toggles --- */
+        function toggleNavMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const backdrop = document.getElementById('backdrop');
+            
+            // Close sidebar if open
+            document.getElementById('sidebar').classList.remove('open');
+            
+            navLinks.classList.toggle('open');
+            backdrop.classList.toggle('active', navLinks.classList.contains('open'));
         }
-        
-        // --- 5. Active Link Highlighting (since we use separate files) ---
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('backdrop');
+            
+            // Close nav links if open
+            document.getElementById('navLinks').classList.remove('open');
+            
+            sidebar.classList.toggle('open');
+            backdrop.classList.toggle('active', sidebar.classList.contains('open'));
+        }
+
+        function closeAllMenus() {
+            document.getElementById('navLinks').classList.remove('open');
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('backdrop').classList.remove('active');
+        }
+
         function highlightActiveLink() {
             const path = window.location.pathname;
-            const page = path.split("/").pop(); // Gets the filename (e.g., index.html)
+            const page = path.split("/").pop();
             
             document.querySelectorAll('.sidebar li a').forEach(link => {
                 if (link.getAttribute('href') === page) {
@@ -395,13 +597,10 @@
             });
         }
 
-
-        // Initialize on load
         window.onload = function() {
             updateLanguage(currentLang);
             highlightActiveLink();
             
-            // Set initial theme icon
             if (document.body.classList.contains('dark-mode')) {
                 document.getElementById('theme-icon').classList.remove('fa-moon');
                 document.getElementById('theme-icon').classList.add('fa-sun');
