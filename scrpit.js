@@ -38,7 +38,23 @@
                 loginBtnAction: "ግባ"
             }
         };
+// Right-Click መከልከል
+  document.addEventListener('contextmenu', e => e.preventDefault());
 
+  // የኪቦርድ Shortcuts (F12, Ctrl+U, Ctrl+Shift+I/J) መዝጋት
+  document.addEventListener('keydown', function(e) {
+    if (
+      e.key === "F12" ||
+      (e.ctrlKey && e.key === "u") ||
+      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C"))
+    ) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  // Drag and Drop (ምስልና ጽሁፍ እንዳይጎተት) መከልከል
+  document.addEventListener('dragstart', e => e.preventDefault());
         function toggleLanguage() {
             currentLang = currentLang === 'en' ? 'am' : 'en';
             document.getElementById('lang-indicator').innerText = currentLang.toUpperCase();
