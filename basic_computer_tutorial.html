@@ -38,6 +38,10 @@
             color: var(--text-color);
             transition: var(--transition);
             line-height: 1.6;
+            webkit-user-select: none;  /* Safari */
+            moz-user-select: none;     /* Firefox */
+            ms-user-select: none;      /* IE/Edge */
+            user-select: none;          /* Standard */
         }
 
         /* --- Navigation Bar (Simple Nav) --- */
@@ -367,6 +371,24 @@
         window.onload = function() {
             toggleLanguage();
         }
+  // Right-Click መከልከል
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
+  // የኪቦርድ Shortcuts (F12, Ctrl+U, Ctrl+Shift+I/J) መዝጋት
+  document.addEventListener('keydown', function(e) {
+    if (
+      e.key === "F12" ||
+      (e.ctrlKey && e.key === "u") ||
+      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C"))
+    ) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  // Drag and Drop (ምስልና ጽሁፍ እንዳይጎተት) መከልከል
+  document.addEventListener('dragstart', e => e.preventDefault());
+
     </script>
 </body>
 </html>
